@@ -6,13 +6,13 @@
     <title>山下桜子｜自己紹介（台本順）</title>
     <style>
       :root {
-        --pink: #ff4aa2;
-        --purple: #7b61ff;
-        --sky: #23d7ff;
-        --mint: #2bffb6;
-        --lemon: #ffe56a;
-        --ink: #0b1020;
-        --card: rgba(255, 255, 255, 0.78);
+        --piano-black: #2c2c2c;
+        --piano-white: #faf9f6;
+        --accent-gold: #c9a227;
+        --accent-rose: #d4a5a5;
+        --accent-cream: #f5f0e8;
+        --ink: #2c2c2c;
+        --card: rgba(255, 252, 248, 0.92);
         --stroke: rgba(0, 0, 0, 0.06);
       }
 
@@ -37,11 +37,10 @@
         position: fixed;
         inset: 0;
         background:
-          radial-gradient(900px 600px at 10% 15%, rgba(255, 74, 162, 0.55), transparent 60%),
-          radial-gradient(850px 600px at 85% 20%, rgba(123, 97, 255, 0.48), transparent 60%),
-          radial-gradient(850px 600px at 20% 90%, rgba(43, 255, 182, 0.38), transparent 62%),
-          radial-gradient(900px 650px at 85% 85%, rgba(35, 215, 255, 0.42), transparent 62%),
-          linear-gradient(180deg, #fff 0%, #fff7fb 40%, #f4fbff 100%);
+          radial-gradient(900px 600px at 20% 20%, rgba(201, 162, 39, 0.12), transparent 55%),
+          radial-gradient(800px 500px at 80% 25%, rgba(212, 165, 165, 0.15), transparent 55%),
+          radial-gradient(700px 500px at 15% 85%, rgba(245, 240, 232, 0.9), transparent 50%),
+          linear-gradient(180deg, #fdfbf7 0%, #faf6f0 50%, #f5f0e8 100%);
       }
 
       .bg::before,
@@ -51,17 +50,15 @@
         inset: -20%;
         background: conic-gradient(
           from 200deg,
-          rgba(255, 74, 162, 0.16),
-          rgba(123, 97, 255, 0.16),
-          rgba(35, 215, 255, 0.16),
-          rgba(43, 255, 182, 0.16),
-          rgba(255, 229, 106, 0.14),
-          rgba(255, 74, 162, 0.16)
+          rgba(201, 162, 39, 0.06),
+          rgba(212, 165, 165, 0.08),
+          rgba(245, 240, 232, 0.1),
+          rgba(201, 162, 39, 0.05)
         );
         filter: blur(26px);
         animation: floaty 14s ease-in-out infinite;
-        mix-blend-mode: screen;
-        opacity: 0.9;
+        mix-blend-mode: multiply;
+        opacity: 0.85;
       }
 
       .bg::after {
@@ -96,7 +93,7 @@
         padding: clamp(22px, 4vw, 42px);
         background: var(--card);
         border: 1px solid var(--stroke);
-        box-shadow: 0 30px 90px rgba(12, 18, 46, 0.18);
+        box-shadow: 0 24px 64px rgba(44, 44, 44, 0.08);
         backdrop-filter: blur(14px);
         -webkit-backdrop-filter: blur(14px);
       }
@@ -107,38 +104,16 @@
         padding-bottom: 16px;
       }
 
-      .kicker {
-        display: inline-flex;
-        gap: 10px;
-        align-items: center;
-        justify-content: flex-start;
-        flex-wrap: wrap;
-        font-weight: 700;
-        letter-spacing: 0.02em;
-        color: rgba(11, 16, 32, 0.76);
-      }
-
-      .pill {
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        padding: 8px 12px;
-        border-radius: 999px;
-        background: rgba(255, 255, 255, 0.74);
-        border: 1px solid rgba(0, 0, 0, 0.06);
-        box-shadow: 0 14px 40px rgba(12, 18, 46, 0.10);
-      }
-
       h1 {
         margin: 0;
         font-size: clamp(34px, 6vw, 78px);
         line-height: 1.05;
         letter-spacing: -0.02em;
-        background: linear-gradient(90deg, var(--pink), var(--purple), var(--sky), var(--mint));
+        background: linear-gradient(90deg, var(--piano-black), #5c4a3a, var(--accent-gold));
         -webkit-background-clip: text;
         background-clip: text;
         color: transparent;
-        text-shadow: 0 10px 26px rgba(0, 0, 0, 0.18);
+        text-shadow: 0 2px 12px rgba(44, 44, 44, 0.06);
       }
 
       .subtitle {
@@ -146,7 +121,7 @@
         max-width: 64ch;
         font-size: clamp(16px, 2.1vw, 22px);
         line-height: 1.8;
-        color: rgba(11, 16, 32, 0.84);
+        color: rgba(44, 44, 44, 0.88);
       }
 
       .heroRow {
@@ -178,7 +153,7 @@
         width: 100%;
         height: 100%;
         object-fit: contain;
-        background: radial-gradient(closest-side at 50% 40%, rgba(255, 229, 106, 0.35), transparent 65%);
+        background: radial-gradient(closest-side at 50% 40%, rgba(201, 162, 39, 0.12), transparent 65%);
       }
 
       .stickerRow {
@@ -200,9 +175,10 @@
         box-shadow: 0 14px 40px rgba(12, 18, 46, 0.10);
       }
 
-      .sticker img {
-        width: 42px;
-        height: 42px;
+      .sticker .pomeranian-svg {
+        width: 48px;
+        height: 48px;
+        flex-shrink: 0;
       }
 
       .sticker strong {
@@ -217,20 +193,84 @@
         grid-template-columns: repeat(12, 1fr);
       }
 
+      .stepMap {
+        margin-top: 18px;
+        margin-bottom: 8px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .stepNode {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 10px 14px;
+        border-radius: 999px;
+        border: 1px solid rgba(44, 44, 44, 0.12);
+        background: rgba(255, 252, 248, 0.95);
+        box-shadow: 0 8px 24px rgba(44, 44, 44, 0.08);
+        font-size: 15px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease,
+          background-color 0.15s ease;
+      }
+
+      .stepNode-badge {
+        min-width: 26px;
+        height: 26px;
+        border-radius: 999px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 13px;
+        font-weight: 800;
+        color: #fff;
+        background: linear-gradient(135deg, var(--piano-black), #5c4a3a);
+        box-shadow: 0 2px 8px rgba(44, 44, 44, 0.2);
+      }
+
+      .stepNode-label {
+        white-space: nowrap;
+        color: var(--ink);
+        letter-spacing: 0.02em;
+      }
+
+      .stepNode.is-active {
+        transform: translateY(-2px);
+        border-color: var(--accent-gold);
+        background: linear-gradient(135deg, rgba(255, 252, 248, 0.98), rgba(249, 245, 235, 0.98));
+        box-shadow: 0 12px 32px rgba(201, 162, 39, 0.22);
+      }
+
       .panel {
         border-radius: 22px;
-        background: rgba(255, 255, 255, 0.62);
-        border: 1px solid rgba(0, 0, 0, 0.06);
+        background: rgba(255, 252, 248, 0.85);
+        border: 1px solid rgba(44, 44, 44, 0.06);
         padding: 18px 18px 16px;
-        box-shadow: 0 18px 60px rgba(12, 18, 46, 0.10);
+        box-shadow: 0 12px 40px rgba(44, 44, 44, 0.06);
+      }
+
+      .panel[data-step] {
+        position: relative;
+        transition: box-shadow 0.18s ease, transform 0.18s ease, border-color 0.18s ease;
+      }
+
+      .panel[data-step].is-active {
+        border-color: var(--accent-gold);
+        box-shadow: 0 16px 48px rgba(201, 162, 39, 0.18);
+        transform: translateY(-2px);
       }
 
       .panel h2 {
         margin: 0 0 12px 0;
-        font-size: 16px;
+        font-size: 18px;
+        font-weight: 800;
         letter-spacing: 0.04em;
-        text-transform: uppercase;
-        color: rgba(11, 16, 32, 0.66);
+        color: var(--ink);
         display: flex;
         align-items: center;
         gap: 10px;
@@ -240,8 +280,8 @@
         width: 10px;
         height: 10px;
         border-radius: 999px;
-        background: linear-gradient(135deg, var(--pink), var(--sky));
-        box-shadow: 0 0 0 6px rgba(255, 74, 162, 0.12);
+        background: linear-gradient(135deg, var(--accent-gold), #a68b5c);
+        box-shadow: 0 0 0 4px rgba(201, 162, 39, 0.2);
       }
 
       .list {
@@ -257,8 +297,8 @@
         gap: 6px;
         padding: 12px 12px;
         border-radius: 16px;
-        background: rgba(255, 255, 255, 0.58);
-        border: 1px solid rgba(0, 0, 0, 0.05);
+        background: rgba(255, 252, 248, 0.7);
+        border: 1px solid rgba(44, 44, 44, 0.04);
       }
 
       .item strong {
@@ -267,7 +307,7 @@
       }
 
       .item span {
-        color: rgba(11, 16, 32, 0.78);
+        color: rgba(44, 44, 44, 0.82);
         line-height: 1.65;
       }
 
@@ -280,9 +320,8 @@
         content: "";
         position: absolute;
         inset: -40%;
-        background: radial-gradient(closest-side at 30% 30%, rgba(255, 74, 162, 0.22), transparent 55%),
-          radial-gradient(closest-side at 75% 35%, rgba(35, 215, 255, 0.20), transparent 55%),
-          radial-gradient(closest-side at 60% 80%, rgba(43, 255, 182, 0.18), transparent 60%);
+        background: radial-gradient(closest-side at 30% 30%, rgba(201, 162, 39, 0.12), transparent 55%),
+          radial-gradient(closest-side at 75% 35%, rgba(212, 165, 165, 0.1), transparent 55%);
         filter: blur(10px);
         opacity: 0.95;
         pointer-events: none;
@@ -293,14 +332,14 @@
         margin: 0;
         font-size: clamp(18px, 2.2vw, 24px);
         line-height: 1.75;
-        color: rgba(11, 16, 32, 0.86);
+        color: rgba(44, 44, 44, 0.9);
       }
 
       .hl {
-        font-weight: 900;
-        background: linear-gradient(90deg, rgba(255, 74, 162, 0.22), rgba(43, 255, 182, 0.18));
+        font-weight: 800;
+        background: linear-gradient(90deg, rgba(201, 162, 39, 0.2), rgba(212, 165, 165, 0.15));
         padding: 2px 6px;
-        border-radius: 10px;
+        border-radius: 8px;
       }
 
       .timeline {
@@ -315,8 +354,8 @@
         align-items: start;
         padding: 12px 12px;
         border-radius: 16px;
-        background: rgba(255, 255, 255, 0.58);
-        border: 1px solid rgba(0, 0, 0, 0.05);
+        background: rgba(255, 252, 248, 0.7);
+        border: 1px solid rgba(44, 44, 44, 0.04);
       }
 
       .tag {
@@ -324,20 +363,20 @@
         font-size: 12px;
         letter-spacing: 0.06em;
         text-transform: uppercase;
-        color: rgba(11, 16, 32, 0.7);
+        color: rgba(44, 44, 44, 0.75);
         display: inline-flex;
         align-items: center;
         justify-content: center;
         padding: 8px 10px;
         border-radius: 999px;
-        background: rgba(255, 255, 255, 0.7);
-        border: 1px solid rgba(0, 0, 0, 0.06);
+        background: rgba(255, 252, 248, 0.9);
+        border: 1px solid rgba(44, 44, 44, 0.06);
         width: fit-content;
       }
 
       .step p {
         margin: 0;
-        color: rgba(11, 16, 32, 0.8);
+        color: rgba(44, 44, 44, 0.85);
         line-height: 1.65;
       }
 
@@ -349,10 +388,6 @@
       @media (max-width: 900px) {
         .heroRow {
           grid-template-columns: 1fr;
-        }
-
-        .kicker {
-          justify-content: center;
         }
 
         .cols-7,
@@ -375,13 +410,12 @@
 
       .sparkles i {
         position: absolute;
-        width: 10px;
-        height: 10px;
+        width: 8px;
+        height: 8px;
         border-radius: 999px;
-        background: white;
-        filter: blur(0.2px);
-        box-shadow: 0 0 0 6px rgba(255, 255, 255, 0.16),
-          0 0 26px rgba(255, 255, 255, 0.55);
+        background: var(--accent-gold);
+        opacity: 0.6;
+        box-shadow: 0 0 0 4px rgba(201, 162, 39, 0.15);
         animation: twinkle 3.8s ease-in-out infinite;
       }
 
@@ -418,11 +452,6 @@
         <header class="hero" aria-label="冒頭（台本 0）">
           <div class="heroRow">
             <div>
-              <div class="kicker">
-                <span class="pill">台本順（上から読むだけ）</span>
-                <span class="pill">自己紹介</span>
-                <span class="pill">AIで仕組み化</span>
-              </div>
               <h1>山下 桜子</h1>
               <p class="subtitle">
                 はじめまして。私は「教える」「作る」「届ける」の3本柱で活動しています。<br />
@@ -435,7 +464,33 @@
               </div>
               <div class="stickerRow">
                 <span class="sticker">
-                  <img src="./assets/pomeranian.svg" alt="白いポメラニアン" />
+                  <svg class="pomeranian-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 220" role="img" aria-label="白いポメラニアン">
+                    <defs>
+                      <linearGradient id="pom-bg" x1="0" x2="1" y1="0" y2="1">
+                        <stop offset="0" stop-color="#ffffff" stop-opacity="0.95"/>
+                        <stop offset="1" stop-color="#f6fbff" stop-opacity="0.95"/>
+                      </linearGradient>
+                      <filter id="pom-shadow" x="-20%" y="-20%" width="140%" height="140%">
+                        <feDropShadow dx="0" dy="8" stdDeviation="10" flood-color="#000" flood-opacity="0.12"/>
+                      </filter>
+                    </defs>
+                    <g filter="url(#pom-shadow)">
+                      <path d="M110 18c36 0 72 24 82 58 10 34-4 74-28 98-24 24-54 30-54 30s-30-6-54-30c-24-24-38-64-28-98C38 42 74 18 110 18Z" fill="url(#pom-bg)" stroke="#e8eef7" stroke-width="3"/>
+                      <path d="M60 96c-10-18-2-46 12-56 10 12 18 22 28 26-10 12-20 18-40 30Z" fill="#fff" stroke="#eef3fb" stroke-width="3"/>
+                      <path d="M160 96c10-18 2-46-12-56-10 12-18 22-28 26 10 12 20 18 40 30Z" fill="#fff" stroke="#eef3fb" stroke-width="3"/>
+                      <path d="M58 138c0-40 28-70 52-70s52 30 52 70c0 32-22 52-52 52s-52-20-52-52Z" fill="#fff" stroke="#eef3fb" stroke-width="3"/>
+                      <circle cx="88" cy="130" r="8" fill="#2a2a33"/>
+                      <circle cx="132" cy="130" r="8" fill="#2a2a33"/>
+                      <circle cx="85" cy="126" r="3" fill="#fff"/>
+                      <circle cx="129" cy="126" r="3" fill="#fff"/>
+                      <path d="M110 146c8 0 14 6 14 12 0 10-10 18-14 18s-14-8-14-18c0-6 6-12 14-12Z" fill="#ff7aa8" opacity="0.9"/>
+                      <path d="M110 148c5 0 8 4 8 8 0 7-5 12-8 12s-8-5-8-12c0-4 3-8 8-8Z" fill="#1f1f28"/>
+                      <path d="M74 150c-10 0-20 10-20 20 0 14 12 26 30 26 8 0 16-2 22-6-18-4-32-18-32-40Z" fill="#fff" stroke="#eef3fb" stroke-width="3"/>
+                      <path d="M146 150c10 0 20 10 20 20 0 14-12 26-30 26-8 0-16-2-22-6 18-4 32-18 32-40Z" fill="#fff" stroke="#eef3fb" stroke-width="3"/>
+                      <path d="M66 96c6 4 14 8 24 12" stroke="#e9eff9" stroke-width="6" stroke-linecap="round"/>
+                      <path d="M154 96c-6 4-14 8-24 12" stroke="#e9eff9" stroke-width="6" stroke-linecap="round"/>
+                    </g>
+                  </svg>
                   <strong>白いポメラニアンと暮らしてます</strong>
                 </span>
               </div>
@@ -443,8 +498,39 @@
           </div>
         </header>
 
+        <nav class="stepMap" aria-label="4分自己紹介の流れ">
+          <button class="stepNode" type="button" data-step-target="1">
+            <span class="stepNode-badge">1</span>
+            <span class="stepNode-label">全体像</span>
+          </button>
+          <button class="stepNode" type="button" data-step-target="2">
+            <span class="stepNode-badge">2</span>
+            <span class="stepNode-label">ピアノ教室</span>
+          </button>
+          <button class="stepNode" type="button" data-step-target="3">
+            <span class="stepNode-badge">3</span>
+            <span class="stepNode-label">オンライン塾</span>
+          </button>
+          <button class="stepNode" type="button" data-step-target="4">
+            <span class="stepNode-badge">4</span>
+            <span class="stepNode-label">YouTube</span>
+          </button>
+          <button class="stepNode" type="button" data-step-target="5">
+            <span class="stepNode-badge">5</span>
+            <span class="stepNode-label">ミッション</span>
+          </button>
+          <button class="stepNode" type="button" data-step-target="6">
+            <span class="stepNode-badge">6</span>
+            <span class="stepNode-label">パーソナル</span>
+          </button>
+          <button class="stepNode" type="button" data-step-target="7">
+            <span class="stepNode-badge">7</span>
+            <span class="stepNode-label">締め</span>
+          </button>
+        </nav>
+
         <section class="grid" aria-label="台本（上から順に読む）">
-          <section class="panel cols-12" aria-label="1. 全体像（3本柱）">
+          <section class="panel cols-12" aria-label="1. 全体像（3本柱）" data-step="1">
             <h2><span class="dot" aria-hidden="true"></span>1. 全体像｜仕事の3本柱</h2>
             <ul class="list">
               <li class="item">
@@ -462,7 +548,7 @@
             </ul>
           </section>
 
-          <section class="panel cols-6" aria-label="2. ピアノ教室（現状と目標）">
+          <section class="panel cols-6" aria-label="2. ピアノ教室（現状と目標）" data-step="2">
             <h2><span class="dot" aria-hidden="true"></span>2. ピアノ教室｜現状 → 目標</h2>
             <div class="timeline">
               <div class="step">
@@ -480,7 +566,7 @@
             </div>
           </section>
 
-          <section class="panel cols-6" aria-label="3. オンライン塾（提供価値）">
+          <section class="panel cols-6" aria-label="3. オンライン塾（提供価値）" data-step="3">
             <h2><span class="dot" aria-hidden="true"></span>3. オンライン塾｜提供価値</h2>
             <ul class="list">
               <li class="item">
@@ -498,7 +584,7 @@
             </ul>
           </section>
 
-          <section class="panel cols-12" aria-label="4. YouTube（ストーリー）">
+          <section class="panel cols-12" aria-label="4. YouTube（ストーリー）" data-step="4">
             <h2><span class="dot" aria-hidden="true"></span>4. YouTube｜挑戦と立て直し</h2>
             <div class="timeline">
               <div class="step">
@@ -516,7 +602,7 @@
             </div>
           </section>
 
-          <section class="panel mission cols-7" aria-label="5. ミッション">
+          <section class="panel mission cols-7" aria-label="5. ミッション" data-step="5">
             <h2><span class="dot" aria-hidden="true"></span>5. ミッション｜AIで手作業から脱却</h2>
             <p>
               AIを活用して<span class="hl">「手作業からの脱却」</span>と<span class="hl">業務効率化</span>を達成する。<br />
@@ -524,7 +610,7 @@
             </p>
           </section>
 
-          <section class="panel cols-5" aria-label="6. パーソナル">
+          <section class="panel cols-5" aria-label="6. パーソナル" data-step="6">
             <h2><span class="dot" aria-hidden="true"></span>6. パーソナル</h2>
             <ul class="list">
               <li class="item">
@@ -538,7 +624,7 @@
             </ul>
           </section>
 
-          <section class="panel cols-12" aria-label="7. 締め">
+          <section class="panel cols-12" aria-label="7. 締め" data-step="7">
             <h2><span class="dot" aria-hidden="true"></span>7. 締め｜今日したいこと</h2>
             <div class="step" style="grid-template-columns: 1fr;">
               <p>
@@ -550,5 +636,43 @@
         </section>
       </main>
     </div>
+    <script>
+      (function () {
+        const panels = Array.from(document.querySelectorAll(".panel[data-step]"));
+        const nodes = Array.from(document.querySelectorAll(".stepNode[data-step-target]"));
+
+        if (!panels.length || !nodes.length) return;
+
+        function setActive(step, options) {
+          const { scroll = false } = options || {};
+          panels.forEach((panel) => {
+            panel.classList.toggle("is-active", panel.dataset.step === String(step));
+          });
+          nodes.forEach((node) => {
+            node.classList.toggle("is-active", node.dataset.stepTarget === String(step));
+          });
+
+          if (scroll) {
+            const target = panels.find((p) => p.dataset.step === String(step));
+            if (target) {
+              const rect = target.getBoundingClientRect();
+              const offset = window.scrollY + rect.top - 90;
+              window.scrollTo({ top: offset, behavior: "smooth" });
+            }
+          }
+        }
+
+        nodes.forEach((node) => {
+          node.addEventListener("click", () => {
+            const step = node.dataset.stepTarget;
+            if (!step) return;
+            setActive(step, { scroll: true });
+          });
+        });
+
+        // 初期状態: 1. 全体像 をハイライト
+        setActive(1);
+      })();
+    </script>
   </body>
 </html>
