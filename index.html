@@ -1,0 +1,554 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>山下桜子｜自己紹介（台本順）</title>
+    <style>
+      :root {
+        --pink: #ff4aa2;
+        --purple: #7b61ff;
+        --sky: #23d7ff;
+        --mint: #2bffb6;
+        --lemon: #ffe56a;
+        --ink: #0b1020;
+        --card: rgba(255, 255, 255, 0.78);
+        --stroke: rgba(0, 0, 0, 0.06);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        height: 100%;
+      }
+
+      body {
+        margin: 0;
+        font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans JP",
+          "Hiragino Kaku Gothic ProN", "Yu Gothic", "Meiryo", sans-serif;
+        color: var(--ink);
+        overflow-x: hidden;
+      }
+
+      .bg {
+        position: fixed;
+        inset: 0;
+        background:
+          radial-gradient(900px 600px at 10% 15%, rgba(255, 74, 162, 0.55), transparent 60%),
+          radial-gradient(850px 600px at 85% 20%, rgba(123, 97, 255, 0.48), transparent 60%),
+          radial-gradient(850px 600px at 20% 90%, rgba(43, 255, 182, 0.38), transparent 62%),
+          radial-gradient(900px 650px at 85% 85%, rgba(35, 215, 255, 0.42), transparent 62%),
+          linear-gradient(180deg, #fff 0%, #fff7fb 40%, #f4fbff 100%);
+      }
+
+      .bg::before,
+      .bg::after {
+        content: "";
+        position: absolute;
+        inset: -20%;
+        background: conic-gradient(
+          from 200deg,
+          rgba(255, 74, 162, 0.16),
+          rgba(123, 97, 255, 0.16),
+          rgba(35, 215, 255, 0.16),
+          rgba(43, 255, 182, 0.16),
+          rgba(255, 229, 106, 0.14),
+          rgba(255, 74, 162, 0.16)
+        );
+        filter: blur(26px);
+        animation: floaty 14s ease-in-out infinite;
+        mix-blend-mode: screen;
+        opacity: 0.9;
+      }
+
+      .bg::after {
+        animation-duration: 19s;
+        animation-direction: reverse;
+        opacity: 0.65;
+      }
+
+      @keyframes floaty {
+        0% {
+          transform: translate3d(-2%, -1%, 0) rotate(-2deg) scale(1.03);
+        }
+        50% {
+          transform: translate3d(2%, 1.5%, 0) rotate(2deg) scale(1.06);
+        }
+        100% {
+          transform: translate3d(-2%, -1%, 0) rotate(-2deg) scale(1.03);
+        }
+      }
+
+      .wrap {
+        position: relative;
+        min-height: 100%;
+        padding: 28px 20px 56px;
+        display: grid;
+        place-items: start center;
+      }
+
+      .card {
+        width: min(1040px, 100%);
+        border-radius: 28px;
+        padding: clamp(22px, 4vw, 42px);
+        background: var(--card);
+        border: 1px solid var(--stroke);
+        box-shadow: 0 30px 90px rgba(12, 18, 46, 0.18);
+        backdrop-filter: blur(14px);
+        -webkit-backdrop-filter: blur(14px);
+      }
+
+      .hero {
+        display: grid;
+        gap: 18px;
+        padding-bottom: 16px;
+      }
+
+      .kicker {
+        display: inline-flex;
+        gap: 10px;
+        align-items: center;
+        justify-content: flex-start;
+        flex-wrap: wrap;
+        font-weight: 700;
+        letter-spacing: 0.02em;
+        color: rgba(11, 16, 32, 0.76);
+      }
+
+      .pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 12px;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.74);
+        border: 1px solid rgba(0, 0, 0, 0.06);
+        box-shadow: 0 14px 40px rgba(12, 18, 46, 0.10);
+      }
+
+      h1 {
+        margin: 0;
+        font-size: clamp(34px, 6vw, 78px);
+        line-height: 1.05;
+        letter-spacing: -0.02em;
+        background: linear-gradient(90deg, var(--pink), var(--purple), var(--sky), var(--mint));
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        text-shadow: 0 10px 26px rgba(0, 0, 0, 0.18);
+      }
+
+      .subtitle {
+        margin: 0 auto;
+        max-width: 64ch;
+        font-size: clamp(16px, 2.1vw, 22px);
+        line-height: 1.8;
+        color: rgba(11, 16, 32, 0.84);
+      }
+
+      .heroRow {
+        display: grid;
+        gap: 16px;
+        grid-template-columns: 1.1fr 0.9fr;
+        align-items: center;
+      }
+
+      .heroArt {
+        display: grid;
+        place-items: center;
+        gap: 12px;
+      }
+
+      .avatarWrap {
+        width: min(340px, 100%);
+        aspect-ratio: 1 / 1;
+        border-radius: 28px;
+        background: rgba(255, 255, 255, 0.72);
+        border: 1px solid rgba(0, 0, 0, 0.06);
+        box-shadow: 0 18px 60px rgba(12, 18, 46, 0.12);
+        display: grid;
+        place-items: center;
+        overflow: hidden;
+      }
+
+      .avatarWrap img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        background: radial-gradient(closest-side at 50% 40%, rgba(255, 229, 106, 0.35), transparent 65%);
+      }
+
+      .stickerRow {
+        display: inline-flex;
+        gap: 10px;
+        align-items: center;
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+
+      .sticker {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 10px 12px;
+        border-radius: 16px;
+        background: rgba(255, 255, 255, 0.75);
+        border: 1px solid rgba(0, 0, 0, 0.06);
+        box-shadow: 0 14px 40px rgba(12, 18, 46, 0.10);
+      }
+
+      .sticker img {
+        width: 42px;
+        height: 42px;
+      }
+
+      .sticker strong {
+        font-size: 14px;
+        letter-spacing: 0.02em;
+      }
+
+      .grid {
+        margin-top: 26px;
+        display: grid;
+        gap: 16px;
+        grid-template-columns: repeat(12, 1fr);
+      }
+
+      .panel {
+        border-radius: 22px;
+        background: rgba(255, 255, 255, 0.62);
+        border: 1px solid rgba(0, 0, 0, 0.06);
+        padding: 18px 18px 16px;
+        box-shadow: 0 18px 60px rgba(12, 18, 46, 0.10);
+      }
+
+      .panel h2 {
+        margin: 0 0 12px 0;
+        font-size: 16px;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        color: rgba(11, 16, 32, 0.66);
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 999px;
+        background: linear-gradient(135deg, var(--pink), var(--sky));
+        box-shadow: 0 0 0 6px rgba(255, 74, 162, 0.12);
+      }
+
+      .list {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        display: grid;
+        gap: 10px;
+      }
+
+      .item {
+        display: grid;
+        gap: 6px;
+        padding: 12px 12px;
+        border-radius: 16px;
+        background: rgba(255, 255, 255, 0.58);
+        border: 1px solid rgba(0, 0, 0, 0.05);
+      }
+
+      .item strong {
+        font-size: 16px;
+        letter-spacing: 0.01em;
+      }
+
+      .item span {
+        color: rgba(11, 16, 32, 0.78);
+        line-height: 1.65;
+      }
+
+      .mission {
+        position: relative;
+        overflow: hidden;
+      }
+
+      .mission::before {
+        content: "";
+        position: absolute;
+        inset: -40%;
+        background: radial-gradient(closest-side at 30% 30%, rgba(255, 74, 162, 0.22), transparent 55%),
+          radial-gradient(closest-side at 75% 35%, rgba(35, 215, 255, 0.20), transparent 55%),
+          radial-gradient(closest-side at 60% 80%, rgba(43, 255, 182, 0.18), transparent 60%);
+        filter: blur(10px);
+        opacity: 0.95;
+        pointer-events: none;
+      }
+
+      .mission p {
+        position: relative;
+        margin: 0;
+        font-size: clamp(18px, 2.2vw, 24px);
+        line-height: 1.75;
+        color: rgba(11, 16, 32, 0.86);
+      }
+
+      .hl {
+        font-weight: 900;
+        background: linear-gradient(90deg, rgba(255, 74, 162, 0.22), rgba(43, 255, 182, 0.18));
+        padding: 2px 6px;
+        border-radius: 10px;
+      }
+
+      .timeline {
+        display: grid;
+        gap: 10px;
+      }
+
+      .step {
+        display: grid;
+        grid-template-columns: 92px 1fr;
+        gap: 12px;
+        align-items: start;
+        padding: 12px 12px;
+        border-radius: 16px;
+        background: rgba(255, 255, 255, 0.58);
+        border: 1px solid rgba(0, 0, 0, 0.05);
+      }
+
+      .tag {
+        font-weight: 800;
+        font-size: 12px;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        color: rgba(11, 16, 32, 0.7);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 8px 10px;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.7);
+        border: 1px solid rgba(0, 0, 0, 0.06);
+        width: fit-content;
+      }
+
+      .step p {
+        margin: 0;
+        color: rgba(11, 16, 32, 0.8);
+        line-height: 1.65;
+      }
+
+      .cols-6 { grid-column: span 6; }
+      .cols-7 { grid-column: span 7; }
+      .cols-5 { grid-column: span 5; }
+      .cols-12 { grid-column: span 12; }
+
+      @media (max-width: 900px) {
+        .heroRow {
+          grid-template-columns: 1fr;
+        }
+
+        .kicker {
+          justify-content: center;
+        }
+
+        .cols-7,
+        .cols-6,
+        .cols-5 {
+          grid-column: span 12;
+        }
+
+        .step {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      .sparkles {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        opacity: 0.9;
+      }
+
+      .sparkles i {
+        position: absolute;
+        width: 10px;
+        height: 10px;
+        border-radius: 999px;
+        background: white;
+        filter: blur(0.2px);
+        box-shadow: 0 0 0 6px rgba(255, 255, 255, 0.16),
+          0 0 26px rgba(255, 255, 255, 0.55);
+        animation: twinkle 3.8s ease-in-out infinite;
+      }
+
+      .sparkles i:nth-child(1) { top: 12%; left: 14%; animation-delay: -0.6s; transform: scale(0.9); }
+      .sparkles i:nth-child(2) { top: 22%; left: 82%; animation-delay: -2.2s; transform: scale(0.7); }
+      .sparkles i:nth-child(3) { top: 78%; left: 16%; animation-delay: -1.4s; transform: scale(0.85); }
+      .sparkles i:nth-child(4) { top: 70%; left: 86%; animation-delay: -3.1s; transform: scale(0.65); }
+      .sparkles i:nth-child(5) { top: 44%; left: 6%; animation-delay: -1.9s; transform: scale(0.55); }
+      .sparkles i:nth-child(6) { top: 48%; left: 94%; animation-delay: -0.9s; transform: scale(0.6); }
+
+      @keyframes twinkle {
+        0% {
+          opacity: 0.35;
+          transform: translateY(0) scale(0.75);
+        }
+        50% {
+          opacity: 1;
+          transform: translateY(-10px) scale(1.05);
+        }
+        100% {
+          opacity: 0.35;
+          transform: translateY(0) scale(0.75);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="bg" aria-hidden="true"></div>
+    <div class="wrap">
+      <div class="sparkles" aria-hidden="true">
+        <i></i><i></i><i></i><i></i><i></i><i></i>
+      </div>
+      <main class="card" role="main">
+        <header class="hero" aria-label="冒頭（台本 0）">
+          <div class="heroRow">
+            <div>
+              <div class="kicker">
+                <span class="pill">台本順（上から読むだけ）</span>
+                <span class="pill">自己紹介</span>
+                <span class="pill">AIで仕組み化</span>
+              </div>
+              <h1>山下 桜子</h1>
+              <p class="subtitle">
+                はじめまして。私は「教える」「作る」「届ける」の3本柱で活動しています。<br />
+                今日お伝えしたい軸は、AIを活用して<span class="hl">手作業から脱却</span>し、業務効率化と仕組み化を進めていくことです。
+              </p>
+            </div>
+            <div class="heroArt" aria-label="イラストとステッカー">
+              <div class="avatarWrap" aria-label="添付イラスト">
+                <img src="./assets/illustration.png" alt="自己紹介のイラスト" />
+              </div>
+              <div class="stickerRow">
+                <span class="sticker">
+                  <img src="./assets/pomeranian.svg" alt="白いポメラニアン" />
+                  <strong>白いポメラニアンと暮らしてます</strong>
+                </span>
+              </div>
+            </div>
+          </div>
+        </header>
+
+        <section class="grid" aria-label="台本（上から順に読む）">
+          <section class="panel cols-12" aria-label="1. 全体像（3本柱）">
+            <h2><span class="dot" aria-hidden="true"></span>1. 全体像｜仕事の3本柱</h2>
+            <ul class="list">
+              <li class="item">
+                <strong>① ピアノ教室 経営</strong>
+                <span>現在は指導も担当。将来的にはオーナー業へ移行できる形にしたい。</span>
+              </li>
+              <li class="item">
+                <strong>② オンライン塾 講師（Canva・動画編集）</strong>
+                <span>操作だけでなく「目的整理 → 最短で形にする」伴走を大切に。</span>
+              </li>
+              <li class="item">
+                <strong>③ YouTube 運用</strong>
+                <span>3ヶ月で収益化達成。現在は“ある出来事”をきっかけに立て直し中。</span>
+              </li>
+            </ul>
+          </section>
+
+          <section class="panel cols-6" aria-label="2. ピアノ教室（現状と目標）">
+            <h2><span class="dot" aria-hidden="true"></span>2. ピアノ教室｜現状 → 目標</h2>
+            <div class="timeline">
+              <div class="step">
+                <span class="tag">現状</span>
+                <p>指導も現役で行いながら教室を運営。</p>
+              </div>
+              <div class="step">
+                <span class="tag">課題</span>
+                <p>問い合わせ対応、日程調整、月謝、連絡文、教材、発表会…細かな手作業が多い。</p>
+              </div>
+              <div class="step">
+                <span class="tag">目標</span>
+                <p>指導に依存しすぎない仕組みを作り、将来的には<span class="hl">オーナー業</span>へ移行。</p>
+              </div>
+            </div>
+          </section>
+
+          <section class="panel cols-6" aria-label="3. オンライン塾（提供価値）">
+            <h2><span class="dot" aria-hidden="true"></span>3. オンライン塾｜提供価値</h2>
+            <ul class="list">
+              <li class="item">
+                <strong>教える内容</strong>
+                <span>Canva・動画編集</span>
+              </li>
+              <li class="item">
+                <strong>大事にしていること</strong>
+                <span>操作の説明だけでなく、何を誰に伝えたいかを整理して“最短で形にする”。</span>
+              </li>
+              <li class="item">
+                <strong>AIとの相性</strong>
+                <span>構成案・文章のたたき台・デザイン方向性の整理で、制作の土台を一気に進められる。</span>
+              </li>
+            </ul>
+          </section>
+
+          <section class="panel cols-12" aria-label="4. YouTube（ストーリー）">
+            <h2><span class="dot" aria-hidden="true"></span>4. YouTube｜挑戦と立て直し</h2>
+            <div class="timeline">
+              <div class="step">
+                <span class="tag">実績</span>
+                <p>開始から3ヶ月で収益化を達成。</p>
+              </div>
+              <div class="step">
+                <span class="tag">出来事</span>
+                <p>先週、突然の「収益化停止勧告」。</p>
+              </div>
+              <div class="step">
+                <span class="tag">いま</span>
+                <p>原因を整理し、表現・チェック体制・制作フローを見直して<span class="hl">再成長中</span>。</p>
+              </div>
+            </div>
+          </section>
+
+          <section class="panel mission cols-7" aria-label="5. ミッション">
+            <h2><span class="dot" aria-hidden="true"></span>5. ミッション｜AIで手作業から脱却</h2>
+            <p>
+              AIを活用して<span class="hl">「手作業からの脱却」</span>と<span class="hl">業務効率化</span>を達成する。<br />
+              繰り返し作業を減らして、レッスン・指導・企画など<span class="hl">価値が生まれる時間</span>に集中したい。
+            </p>
+          </section>
+
+          <section class="panel cols-5" aria-label="6. パーソナル">
+            <h2><span class="dot" aria-hidden="true"></span>6. パーソナル</h2>
+            <ul class="list">
+              <li class="item">
+                <strong>性格</strong>
+                <span>明るく前向き。「起きたこと」より「次にどうするか」を大事にするタイプ。</span>
+              </li>
+              <li class="item">
+                <strong>相棒</strong>
+                <span>白いポメラニアンとの生活が日々のリフレッシュ。</span>
+              </li>
+            </ul>
+          </section>
+
+          <section class="panel cols-12" aria-label="7. 締め">
+            <h2><span class="dot" aria-hidden="true"></span>7. 締め｜今日したいこと</h2>
+            <div class="step" style="grid-template-columns: 1fr;">
+              <p>
+                AI×業務効率化×仕組み作りについて情報交換できたら嬉しいです。<br />
+                教育・制作・運用の現場で「ここが手作業で詰まりやすい」というポイントがあれば、ぜひ教えてください。よろしくお願いします。
+              </p>
+            </div>
+          </section>
+        </section>
+      </main>
+    </div>
+  </body>
+</html>
