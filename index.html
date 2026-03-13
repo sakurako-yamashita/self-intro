@@ -37,10 +37,12 @@
         position: fixed;
         inset: 0;
         background:
-          radial-gradient(900px 600px at 20% 20%, rgba(201, 162, 39, 0.12), transparent 55%),
-          radial-gradient(800px 500px at 80% 25%, rgba(212, 165, 165, 0.15), transparent 55%),
-          radial-gradient(700px 500px at 15% 85%, rgba(245, 240, 232, 0.9), transparent 50%),
-          linear-gradient(180deg, #fdfbf7 0%, #faf6f0 50%, #f5f0e8 100%);
+          radial-gradient(1000px 700px at 15% 15%, rgba(255, 105, 180, 0.08), transparent 50%),
+          radial-gradient(900px 600px at 85% 20%, rgba(135, 206, 250, 0.1), transparent 52%),
+          radial-gradient(900px 600px at 20% 85%, rgba(255, 239, 213, 0.12), transparent 52%),
+          radial-gradient(800px 500px at 20% 20%, rgba(201, 162, 39, 0.14), transparent 55%),
+          radial-gradient(800px 500px at 80% 25%, rgba(212, 165, 165, 0.16), transparent 55%),
+          linear-gradient(180deg, #fefcf9 0%, #fdfbf7 35%, #faf6f0 70%, #f5f0e8 100%);
       }
 
       .bg::before,
@@ -93,97 +95,146 @@
         padding: clamp(22px, 4vw, 42px);
         background: var(--card);
         border: 1px solid var(--stroke);
-        box-shadow: 0 24px 64px rgba(44, 44, 44, 0.08);
+        box-shadow: 0 28px 80px rgba(44, 44, 44, 0.1), 0 0 0 1px rgba(255, 255, 255, 0.5) inset;
         backdrop-filter: blur(14px);
         -webkit-backdrop-filter: blur(14px);
       }
 
       .hero {
-        display: grid;
-        gap: 18px;
-        padding-bottom: 16px;
+        padding-bottom: 24px;
       }
 
-      h1 {
-        margin: 0;
-        font-size: clamp(34px, 6vw, 78px);
-        line-height: 1.05;
-        letter-spacing: -0.02em;
-        background: linear-gradient(90deg, var(--piano-black), #5c4a3a, var(--accent-gold));
-        -webkit-background-clip: text;
-        background-clip: text;
-        color: transparent;
-        text-shadow: 0 2px 12px rgba(44, 44, 44, 0.06);
+      .profileCard {
+        padding: 24px 28px 28px;
+        border-radius: 20px;
+        background: linear-gradient(165deg, rgba(255, 255, 255, 0.98) 0%, rgba(253, 251, 247, 0.98) 50%, rgba(250, 247, 242, 0.98) 100%);
+        border: 1px solid rgba(44, 44, 44, 0.08);
+        box-shadow: 0 12px 40px rgba(44, 44, 44, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.9);
       }
 
-      .subtitle {
-        margin: 0 auto;
-        max-width: 64ch;
-        font-size: clamp(16px, 2.1vw, 22px);
-        line-height: 1.8;
-        color: rgba(44, 44, 44, 0.88);
-      }
-
-      .heroRow {
-        display: grid;
-        gap: 16px;
-        grid-template-columns: 1.1fr 0.9fr;
+      .profileCard-header {
+        display: flex;
+        flex-wrap: wrap;
         align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        margin-bottom: 20px;
       }
 
-      .heroArt {
+      .profileCard-title {
+        margin: 0;
+        font-size: clamp(26px, 4vw, 38px);
+        font-weight: 800;
+        letter-spacing: -0.02em;
+        color: var(--piano-black);
+      }
+
+      .profileCard-date {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 15px;
+        color: rgba(44, 44, 44, 0.8);
+      }
+
+      .profileCard-row {
         display: grid;
-        place-items: center;
+        grid-template-columns: 1fr auto;
+        gap: 24px;
+        align-items: start;
+      }
+
+      .profileCard-fields {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+      }
+
+      .profileCard-field {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: baseline;
+        gap: 8px 12px;
+      }
+
+      .profileCard-field label {
+        font-size: 14px;
+        font-weight: 600;
+        color: rgba(44, 44, 44, 0.7);
+        min-width: 4.5em;
+      }
+
+      .profileCard-field .value {
+        flex: 1;
+        min-width: 120px;
+        font-size: 15px;
+        color: var(--ink);
+        border-bottom: 1px solid rgba(44, 44, 44, 0.2);
+        padding-bottom: 2px;
+      }
+
+      .profileCard-fieldRow {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
         gap: 12px;
       }
 
-      .avatarWrap {
-        width: min(340px, 100%);
-        aspect-ratio: 1 / 1;
-        border-radius: 28px;
-        background: rgba(255, 255, 255, 0.72);
-        border: 1px solid rgba(0, 0, 0, 0.06);
-        box-shadow: 0 18px 60px rgba(12, 18, 46, 0.12);
+      .profileCard-portraitWrap {
+        text-align: center;
+      }
+
+      .profileCard-photo {
+        width: 140px;
+        height: 140px;
+        flex-shrink: 0;
+        border-radius: 12px;
+        overflow: hidden;
+        border: 1px solid rgba(44, 44, 44, 0.1);
+        box-shadow: 0 8px 24px rgba(44, 44, 44, 0.1);
         display: grid;
         place-items: center;
-        overflow: hidden;
+        background: linear-gradient(145deg, #f5f0e8 0%, #ebe5dc 100%);
       }
 
-      .avatarWrap img {
+      .profileCard-photo img {
         width: 100%;
         height: 100%;
-        object-fit: contain;
-        background: radial-gradient(closest-side at 50% 40%, rgba(201, 162, 39, 0.12), transparent 65%);
+        object-fit: cover;
       }
 
-      .stickerRow {
-        display: inline-flex;
-        gap: 10px;
-        align-items: center;
-        justify-content: center;
+      .profileCard-portraitLabel {
+        margin-top: 8px;
+        font-size: 13px;
+        font-weight: 600;
+        color: rgba(44, 44, 44, 0.6);
+      }
+
+      .profileCard-nameRow {
+        display: flex;
         flex-wrap: wrap;
+        align-items: center;
+        gap: 12px 20px;
       }
 
-      .sticker {
+      .profileCard-nameRow .value { border-bottom: 1px solid rgba(44, 44, 44, 0.2); padding-bottom: 2px; }
+
+      .profileCard-pomWrap {
         display: inline-flex;
         align-items: center;
-        gap: 10px;
-        padding: 10px 12px;
-        border-radius: 16px;
-        background: rgba(255, 255, 255, 0.75);
-        border: 1px solid rgba(0, 0, 0, 0.06);
-        box-shadow: 0 14px 40px rgba(12, 18, 46, 0.10);
+        gap: 8px;
+        padding: 6px 12px;
+        border: 2px solid rgba(201, 162, 39, 0.5);
+        border-radius: 12px;
+        background: rgba(255, 252, 248, 0.9);
+        box-shadow: 0 2px 8px rgba(44, 44, 44, 0.06);
       }
 
-      .sticker .pomeranian-svg {
-        width: 48px;
-        height: 48px;
-        flex-shrink: 0;
-      }
+      .profileCard-pomWrap .pomeranian-svg { width: 28px; height: 28px; flex-shrink: 0; }
+      .profileCard-pomWrap .pomLabel { font-size: 13px; font-weight: 600; color: rgba(44, 44, 44, 0.85); }
 
-      .sticker strong {
-        font-size: 14px;
-        letter-spacing: 0.02em;
+      @media (max-width: 600px) {
+        .profileCard-row { grid-template-columns: 1fr; }
+        .profileCard-portraitWrap { order: -1; }
       }
 
       .grid {
@@ -203,16 +254,28 @@
         justify-content: center;
       }
 
+      @media (min-width: 720px) {
+        .stepMap {
+          display: grid;
+          grid-template-columns: repeat(4, 1fr);
+          gap: 10px;
+          max-width: 640px;
+          margin-left: auto;
+          margin-right: auto;
+        }
+        .stepNode { justify-self: center; }
+      }
+
       .stepNode {
         display: inline-flex;
         align-items: center;
-        gap: 8px;
-        padding: 10px 14px;
+        gap: 6px;
+        padding: 8px 12px;
         border-radius: 999px;
         border: 1px solid rgba(44, 44, 44, 0.12);
         background: rgba(255, 252, 248, 0.95);
-        box-shadow: 0 8px 24px rgba(44, 44, 44, 0.08);
-        font-size: 15px;
+        box-shadow: 0 6px 20px rgba(44, 44, 44, 0.06);
+        font-size: 14px;
         font-weight: 700;
         cursor: pointer;
         transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease,
@@ -342,6 +405,23 @@
         border-radius: 8px;
       }
 
+      .hl-strong {
+        font-weight: 800;
+        color: var(--piano-black);
+        background: rgba(255, 105, 180, 0.2);
+        padding: 2px 6px;
+        border-radius: 6px;
+        border: 1px solid rgba(255, 105, 180, 0.35);
+      }
+
+      .hl-shape {
+        font-weight: 800;
+        color: var(--piano-black);
+        background: rgba(201, 162, 39, 0.25);
+        padding: 2px 6px;
+        border-radius: 6px;
+      }
+
       .timeline {
         display: grid;
         gap: 10px;
@@ -440,59 +520,147 @@
           transform: translateY(0) scale(0.75);
         }
       }
+
+      .notes-deco {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        overflow: hidden;
+        z-index: 0;
+      }
+
+      .notes-deco span {
+        position: absolute;
+        font-size: clamp(22px, 2.5vw, 36px);
+        opacity: 0.5;
+        line-height: 1;
+      }
+
+      .notes-deco .note-pink { color: #ff69b4; }
+      .notes-deco .note-cream { color: #ffefd5; }
+      .notes-deco .note-sky { color: #87cefa; }
+
+      .notes-deco .n1 { top: 4%; left: 3%; transform: rotate(-12deg); }
+      .notes-deco .n2 { top: 10%; right: 5%; transform: rotate(8deg); }
+      .notes-deco .n3 { top: 18%; left: 8%; transform: rotate(-5deg); }
+      .notes-deco .n4 { top: 28%; right: 2%; transform: rotate(15deg); }
+      .notes-deco .n5 { top: 38%; left: 2%; transform: rotate(-8deg); }
+      .notes-deco .n6 { top: 48%; right: 10%; transform: rotate(6deg); }
+      .notes-deco .n7 { top: 58%; left: 6%; transform: rotate(-15deg); }
+      .notes-deco .n8 { top: 68%; right: 4%; transform: rotate(10deg); }
+      .notes-deco .n9 { top: 76%; left: 8%; transform: rotate(-6deg); }
+      .notes-deco .n10 { top: 86%; right: 8%; transform: rotate(12deg); }
+      .notes-deco .n11 { top: 14%; left: 22%; transform: rotate(5deg); }
+      .notes-deco .n12 { top: 52%; right: 24%; transform: rotate(-10deg); }
+      .notes-deco .n13 { top: 34%; left: 16%; transform: rotate(7deg); }
+      .notes-deco .n14 { top: 64%; left: 18%; transform: rotate(-7deg); }
+      .notes-deco .n15 { top: 8%; right: 20%; transform: rotate(-5deg); }
+      .notes-deco .n16 { top: 24%; right: 14%; transform: rotate(3deg); }
+      .notes-deco .n17 { top: 62%; left: 12%; transform: rotate(-8deg); }
+      .notes-deco .n18 { top: 74%; right: 16%; transform: rotate(5deg); }
+      .notes-deco .n19 { top: 42%; left: 6%; transform: rotate(-3deg); }
+      .notes-deco .n20 { top: 44%; right: 18%; transform: rotate(9deg); }
+      .notes-deco .n21 { top: 22%; left: 28%; transform: rotate(-9deg); }
+      .notes-deco .n22 { top: 72%; left: 28%; transform: rotate(6deg); }
+      .notes-deco .n23 { top: 6%; left: 45%; transform: rotate(4deg); }
+      .notes-deco .n24 { top: 90%; left: 35%; transform: rotate(-7deg); }
+      .notes-deco .n25 { top: 50%; left: 32%; transform: rotate(11deg); }
+      .notes-deco .n26 { top: 30%; right: 32%; transform: rotate(-6deg); }
+      .notes-deco .n27 { top: 12%; right: 38%; transform: rotate(8deg); }
+      .notes-deco .n28 { top: 80%; right: 32%; transform: rotate(-4deg); }
+      .notes-deco .n29 { top: 56%; left: 38%; transform: rotate(7deg); }
+      .notes-deco .n30 { top: 16%; left: 52%; transform: rotate(-10deg); }
     </style>
   </head>
   <body>
     <div class="bg" aria-hidden="true"></div>
+    <div class="notes-deco" aria-hidden="true">
+      <span class="note-pink n1">♪</span><span class="note-cream n2">♩</span><span class="note-sky n3">♪</span>
+      <span class="note-pink n4">♩</span><span class="note-cream n5">♪</span><span class="note-sky n6">♩</span>
+      <span class="note-pink n7">♪</span><span class="note-cream n8">♩</span><span class="note-sky n9">♪</span>
+      <span class="note-pink n10">♩</span><span class="note-cream n11">♪</span><span class="note-pink n12">♩</span>
+      <span class="note-sky n13">♪</span><span class="note-cream n14">♩</span><span class="note-pink n15">♪</span>
+      <span class="note-sky n16">&#119070;</span><span class="note-pink n17">&#119070;</span><span class="note-cream n18">&#119070;</span>
+      <span class="note-pink n19">♪</span><span class="note-cream n20">♩</span><span class="note-sky n21">♪</span>
+      <span class="note-pink n22">♩</span><span class="note-cream n23">♪</span><span class="note-sky n24">♩</span>
+      <span class="note-pink n25">♪</span><span class="note-cream n26">♩</span><span class="note-sky n27">&#119070;</span>
+      <span class="note-pink n28">♪</span><span class="note-cream n29">♩</span><span class="note-sky n30">♪</span>
+    </div>
     <div class="wrap">
       <div class="sparkles" aria-hidden="true">
         <i></i><i></i><i></i><i></i><i></i><i></i>
       </div>
       <main class="card" role="main">
         <header class="hero" aria-label="冒頭（台本 0）">
-          <div class="heroRow">
-            <div>
-              <h1>山下 桜子</h1>
-              <p class="subtitle">
-                はじめまして。私は「教える」「作る」「届ける」の3本柱で活動しています。<br />
-                今日お伝えしたい軸は、AIを活用して<span class="hl">手作業から脱却</span>し、業務効率化と仕組み化を進めていくことです。
+          <div class="profileCard">
+            <div class="profileCard-header">
+              <h1 class="profileCard-title">My Data</h1>
+              <p class="profileCard-date" aria-label="今日の日付">
+                <span id="today-year">ねん</span> <span id="today-month">がっ</span> <span id="today-day">にち</span>
               </p>
             </div>
-            <div class="heroArt" aria-label="イラストとステッカー">
-              <div class="avatarWrap" aria-label="添付イラスト">
-                <img src="./assets/illustration.png" alt="自己紹介のイラスト" />
+            <div class="profileCard-row">
+              <div class="profileCard-fields">
+                <div class="profileCard-field">
+                  <label>なまえ</label>
+                  <div class="profileCard-nameRow">
+                    <span class="value">山下 桜子</span>
+                    <span class="profileCard-pomWrap">
+                      <svg class="pomeranian-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 220" role="img" aria-label="白いポメラニアン">
+                        <defs>
+                          <linearGradient id="pom-bg" x1="0" x2="1" y1="0" y2="1">
+                            <stop offset="0" stop-color="#ffffff" stop-opacity="0.95"/>
+                            <stop offset="1" stop-color="#f6fbff" stop-opacity="0.95"/>
+                          </linearGradient>
+                          <filter id="pom-shadow" x="-20%" y="-20%" width="140%" height="140%">
+                            <feDropShadow dx="0" dy="8" stdDeviation="10" flood-color="#000" flood-opacity="0.12"/>
+                          </filter>
+                        </defs>
+                        <g filter="url(#pom-shadow)">
+                          <path d="M110 18c36 0 72 24 82 58 10 34-4 74-28 98-24 24-54 30-54 30s-30-6-54-30c-24-24-38-64-28-98C38 42 74 18 110 18Z" fill="url(#pom-bg)" stroke="#e8eef7" stroke-width="3"/>
+                          <path d="M60 96c-10-18-2-46 12-56 10 12 18 22 28 26-10 12-20 18-40 30Z" fill="#fff" stroke="#eef3fb" stroke-width="3"/>
+                          <path d="M160 96c10-18 2-46-12-56-10 12-18 22-28 26 10 12 20 18 40 30Z" fill="#fff" stroke="#eef3fb" stroke-width="3"/>
+                          <path d="M58 138c0-40 28-70 52-70s52 30 52 70c0 32-22 52-52 52s-52-20-52-52Z" fill="#fff" stroke="#eef3fb" stroke-width="3"/>
+                          <circle cx="88" cy="130" r="8" fill="#2a2a33"/>
+                          <circle cx="132" cy="130" r="8" fill="#2a2a33"/>
+                          <circle cx="85" cy="126" r="3" fill="#fff"/>
+                          <circle cx="129" cy="126" r="3" fill="#fff"/>
+                          <path d="M110 146c8 0 14 6 14 12 0 10-10 18-14 18s-14-8-14-18c0-6 6-12 14-12Z" fill="#ff7aa8" opacity="0.9"/>
+                          <path d="M110 148c5 0 8 4 8 8 0 7-5 12-8 12s-8-5-8-12c0-4 3-8 8-8Z" fill="#1f1f28"/>
+                          <path d="M74 150c-10 0-20 10-20 20 0 14 12 26 30 26 8 0 16-2 22-6-18-4-32-18-32-40Z" fill="#fff" stroke="#eef3fb" stroke-width="3"/>
+                          <path d="M146 150c10 0 20 10 20 20 0 14-12 26-30 26-8 0-16-2-22-6 18-4 32-18 32-40Z" fill="#fff" stroke="#eef3fb" stroke-width="3"/>
+                          <path d="M66 96c6 4 14 8 24 12" stroke="#e9eff9" stroke-width="6" stroke-linecap="round"/>
+                          <path d="M154 96c-6 4-14 8-24 12" stroke="#e9eff9" stroke-width="6" stroke-linecap="round"/>
+                        </g>
+                      </svg>
+                      <span class="pomLabel">白いポメラニアンと暮らしています</span>
+                    </span>
+                  </div>
+                </div>
+                <div class="profileCard-field">
+                  <label>活動</label>
+                  <span class="value">ピアノ教室 ・ オンライン塾 ・ YouTube</span>
+                </div>
+                <div class="profileCard-field profileCard-fieldRow">
+                  <div class="profileCard-field">
+                    <label>分野</label>
+                    <span class="value">教育 × クリエイティブ</span>
+                  </div>
+                  <div class="profileCard-field">
+                    <label>役割</label>
+                    <span class="value">経営 ・ 講師 ・ 運用</span>
+                  </div>
+                </div>
+                <div class="profileCard-field">
+                  <label>ひとこと</label>
+                  <span class="value">AIで手作業から脱却し、仕組み化を進めています。</span>
+                </div>
               </div>
-              <div class="stickerRow">
-                <span class="sticker">
-                  <svg class="pomeranian-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 220" role="img" aria-label="白いポメラニアン">
-                    <defs>
-                      <linearGradient id="pom-bg" x1="0" x2="1" y1="0" y2="1">
-                        <stop offset="0" stop-color="#ffffff" stop-opacity="0.95"/>
-                        <stop offset="1" stop-color="#f6fbff" stop-opacity="0.95"/>
-                      </linearGradient>
-                      <filter id="pom-shadow" x="-20%" y="-20%" width="140%" height="140%">
-                        <feDropShadow dx="0" dy="8" stdDeviation="10" flood-color="#000" flood-opacity="0.12"/>
-                      </filter>
-                    </defs>
-                    <g filter="url(#pom-shadow)">
-                      <path d="M110 18c36 0 72 24 82 58 10 34-4 74-28 98-24 24-54 30-54 30s-30-6-54-30c-24-24-38-64-28-98C38 42 74 18 110 18Z" fill="url(#pom-bg)" stroke="#e8eef7" stroke-width="3"/>
-                      <path d="M60 96c-10-18-2-46 12-56 10 12 18 22 28 26-10 12-20 18-40 30Z" fill="#fff" stroke="#eef3fb" stroke-width="3"/>
-                      <path d="M160 96c10-18 2-46-12-56-10 12-18 22-28 26 10 12 20 18 40 30Z" fill="#fff" stroke="#eef3fb" stroke-width="3"/>
-                      <path d="M58 138c0-40 28-70 52-70s52 30 52 70c0 32-22 52-52 52s-52-20-52-52Z" fill="#fff" stroke="#eef3fb" stroke-width="3"/>
-                      <circle cx="88" cy="130" r="8" fill="#2a2a33"/>
-                      <circle cx="132" cy="130" r="8" fill="#2a2a33"/>
-                      <circle cx="85" cy="126" r="3" fill="#fff"/>
-                      <circle cx="129" cy="126" r="3" fill="#fff"/>
-                      <path d="M110 146c8 0 14 6 14 12 0 10-10 18-14 18s-14-8-14-18c0-6 6-12 14-12Z" fill="#ff7aa8" opacity="0.9"/>
-                      <path d="M110 148c5 0 8 4 8 8 0 7-5 12-8 12s-8-5-8-12c0-4 3-8 8-8Z" fill="#1f1f28"/>
-                      <path d="M74 150c-10 0-20 10-20 20 0 14 12 26 30 26 8 0 16-2 22-6-18-4-32-18-32-40Z" fill="#fff" stroke="#eef3fb" stroke-width="3"/>
-                      <path d="M146 150c10 0 20 10 20 20 0 14-12 26-30 26-8 0-16-2-22-6 18-4 32-18 32-40Z" fill="#fff" stroke="#eef3fb" stroke-width="3"/>
-                      <path d="M66 96c6 4 14 8 24 12" stroke="#e9eff9" stroke-width="6" stroke-linecap="round"/>
-                      <path d="M154 96c-6 4-14 8-24 12" stroke="#e9eff9" stroke-width="6" stroke-linecap="round"/>
-                    </g>
-                  </svg>
-                  <strong>白いポメラニアンと暮らしてます</strong>
-                </span>
+              <div class="profileCard-portraitWrap">
+                <div class="profileCard-photo" aria-label="にがおえ">
+                  <img src="./assets/illustration.png" alt="山下桜子" />
+                </div>
+                <p class="profileCard-portraitLabel">にがおえ</p>
               </div>
             </div>
           </div>
@@ -557,7 +725,7 @@
               </div>
               <div class="step">
                 <span class="tag">課題</span>
-                <p>問い合わせ対応、日程調整、月謝、連絡文、教材、発表会…細かな手作業が多い。</p>
+                <p>問い合わせ対応、日程調整、月謝、連絡文、教材、発表会…<span class="hl-strong">細かな手作業が多い。</span></p>
               </div>
               <div class="step">
                 <span class="tag">目標</span>
@@ -575,7 +743,7 @@
               </li>
               <li class="item">
                 <strong>大事にしていること</strong>
-                <span>操作の説明だけでなく、何を誰に伝えたいかを整理して“最短で形にする”。</span>
+                <span>操作の説明だけでなく、何を誰に伝えたいかを整理して<span class="hl-shape">最短で形にする</span>。</span>
               </li>
               <li class="item">
                 <strong>AIとの相性</strong>
@@ -637,6 +805,15 @@
       </main>
     </div>
     <script>
+      (function () {
+        var d = new Date();
+        var y = document.getElementById("today-year");
+        var m = document.getElementById("today-month");
+        var day = document.getElementById("today-day");
+        if (y) y.textContent = d.getFullYear() + "年";
+        if (m) m.textContent = (d.getMonth() + 1) + "月";
+        if (day) day.textContent = d.getDate() + "日";
+      })();
       (function () {
         const panels = Array.from(document.querySelectorAll(".panel[data-step]"));
         const nodes = Array.from(document.querySelectorAll(".stepNode[data-step-target]"));
