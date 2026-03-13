@@ -202,11 +202,8 @@
         object-fit: cover;
       }
 
-      .profileCard-portraitLabel {
-        margin-top: 8px;
-        font-size: 13px;
-        font-weight: 600;
-        color: rgba(44, 44, 44, 0.6);
+      .profileCard-photoMobile {
+        display: none;
       }
 
       .profileCard-nameRow {
@@ -233,8 +230,80 @@
       .profileCard-pomWrap .pomLabel { font-size: 13px; font-weight: 600; color: rgba(44, 44, 44, 0.85); }
 
       @media (max-width: 600px) {
-        .profileCard-row { grid-template-columns: 1fr; }
-        .profileCard-portraitWrap { order: -1; }
+        .profileCard {
+          padding: 16px 18px 20px;
+        }
+        .profileCard-header {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 8px;
+          margin-bottom: 16px;
+        }
+        .profileCard-title {
+          font-size: 22px;
+        }
+        .profileCard-date {
+          font-size: 14px;
+        }
+        .profileCard-row {
+          grid-template-columns: 1fr;
+          gap: 18px;
+        }
+        .profileCard-portraitWrap {
+          display: none;
+        }
+        .profileCard-photoMobile {
+          display: grid;
+          width: 56px;
+          height: 56px;
+          min-width: 56px;
+          min-height: 56px;
+          border-radius: 10px;
+        }
+        .profileCard-photoMobile img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+        .profileCard-fields {
+          gap: 14px;
+        }
+        .profileCard-field {
+          flex-direction: column;
+          align-items: stretch;
+          gap: 4px;
+        }
+        .profileCard-field label {
+          min-width: auto;
+          font-size: 13px;
+        }
+        .profileCard-field .value {
+          min-width: 0;
+          font-size: 14px;
+        }
+        .profileCard-nameRow {
+          flex-direction: row;
+          flex-wrap: wrap;
+          align-items: center;
+          gap: 10px 12px;
+        }
+        .profileCard-nameRow .value {
+          width: auto;
+        }
+        .profileCard-pomWrap {
+          align-self: flex-start;
+          padding: 5px 10px;
+        }
+        .profileCard-pomWrap .pomeranian-svg {
+          width: 24px;
+          height: 24px;
+        }
+        .profileCard-pomWrap .pomLabel {
+          font-size: 12px;
+        }
+        .profileCard-fieldRow {
+          grid-template-columns: 1fr;
+        }
       }
 
       .grid {
@@ -605,6 +674,9 @@
                   <label>なまえ</label>
                   <div class="profileCard-nameRow">
                     <span class="value">山下 桜子</span>
+                    <div class="profileCard-photo profileCard-photoMobile" aria-hidden="true">
+                      <img src="./assets/illustration.png" alt="" />
+                    </div>
                     <span class="profileCard-pomWrap">
                       <svg class="pomeranian-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 220" role="img" aria-label="白いポメラニアン">
                         <defs>
@@ -657,10 +729,9 @@
                 </div>
               </div>
               <div class="profileCard-portraitWrap">
-                <div class="profileCard-photo" aria-label="にがおえ">
+                <div class="profileCard-photo" aria-label="プロフィール写真">
                   <img src="./assets/illustration.png" alt="山下桜子" />
                 </div>
-                <p class="profileCard-portraitLabel">にがおえ</p>
               </div>
             </div>
           </div>
