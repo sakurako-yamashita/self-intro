@@ -2,7 +2,9 @@
 <html lang="ja">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="apple-mobile-web-app-capable" content="no" />
+    <meta name="mobile-web-app-capable" content="no" />
     <title>Beauty Journal｜スキンケア・生活記録</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -392,6 +394,57 @@
       .data-sync .import-wrap { display: flex; align-items: center; gap: 8px; }
       .data-sync input[type="file"] { font-size: 0.85rem; }
       .data-sync .hint { font-size: 0.8rem; color: var(--muted); margin-top: 10px; line-height: 1.5; }
+      .log-item { cursor: pointer; }
+      .log-item:active { opacity: 0.9; }
+      .detail-overlay {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(0,0,0,0.4);
+        z-index: 100;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+        padding: 20px;
+        box-sizing: border-box;
+      }
+      .detail-overlay.show { display: block; }
+      .detail-modal {
+        max-width: 480px;
+        margin: 0 auto 24px;
+        background: var(--card);
+        border-radius: 18px;
+        padding: 20px 18px;
+        border: 1px solid var(--border);
+        box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+      }
+      .detail-modal h3 {
+        font-family: var(--font-display);
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: var(--ink);
+        margin: 0 0 16px 0;
+        padding-bottom: 12px;
+        border-bottom: 1px solid var(--border);
+      }
+      .detail-modal .detail-row { margin-bottom: 12px; font-size: 0.9rem; }
+      .detail-modal .detail-label { font-weight: 600; color: var(--muted); font-size: 0.8rem; margin-bottom: 2px; }
+      .detail-modal .detail-value { color: var(--ink); }
+      .detail-modal .detail-value.empty { color: var(--muted); }
+      .detail-modal .detail-photo { max-width: 100%; max-height: 200px; border-radius: 10px; margin-top: 6px; border: 1px solid var(--border); }
+      .detail-close {
+        display: block;
+        width: 100%;
+        padding: 12px;
+        margin-top: 16px;
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        background: var(--bg-soft);
+        font-family: var(--font-body);
+        font-size: 0.95rem;
+        color: var(--ink);
+        cursor: pointer;
+      }
+      .detail-close:active { opacity: 0.9; }
     </style>
   </head>
   <body>
@@ -528,6 +581,13 @@
         <div id="stats-content"></div>
         <p id="stats-empty" class="empty-msg" style="display:none;">記録が少ないと集計できません。まずは数日分記録してみてください。</p>
       </section>
+    </div>
+    <div id="detail-overlay" class="detail-overlay" role="dialog" aria-modal="true" aria-label="記録の詳細">
+      <div class="detail-modal">
+        <h3 id="detail-title">記録の詳細</h3>
+        <div id="detail-body"></div>
+        <button type="button" class="detail-close" id="detail-close">閉じる</button>
+      </div>
     </div>
     <script>
       const STORAGE_KEY = 'beauty-log-entries';
@@ -865,6 +925,38 @@
         if (n >= 3) return 'normal';
         return 'bad';
       }
+      function stoolDisplayValue(v) {
+        if (!v) return '';
+        if (v === 'yes') return '出た';
+        if (v === 'no') return '出なかった';
+        if (v === 'bad') return '出たが調子が悪い';
+        return v;
+      }
+      function showDetailModal(entry) {
+        var html = '';
+        function row(label, value, isEmpty) {
+          var c = isEmpty ? ' detail-value empty' : ' detail-value';
+          return '<div class="detail-row"><div class="detail-label">' + label + '</div><div class="' + c + '">' + (value || '—') + '</div></div>';
+        }
+        html += row('朝のスキンケア', entry.morning, !entry.morning);
+        html += row('使った化粧品', entry.cosmetics, !entry.cosmetics);
+        html += row('食事', entry.meals, !entry.meals);
+        html += row('夜のスキンケア', entry.evening, !entry.evening);
+        html += row('便の状態', stoolDisplayValue(entry.stool), !entry.stool);
+        html += row('その日の肌状態', entry.skin != null ? entry.skin + '（' + skinLabel(entry.skin) + '）' : '', entry.skin == null);
+        html += row('メモ', entry.notes, !entry.notes);
+        if (entry.photo) html += '<div class="detail-row"><div class="detail-label">写真</div><img src="' + entry.photo + '" alt="" class="detail-photo" /></div>';
+        document.getElementById('detail-title').textContent = formatDate(entry.date) + ' の記録';
+        document.getElementById('detail-body').innerHTML = html;
+        document.getElementById('detail-overlay').classList.add('show');
+      }
+      function hideDetailModal() {
+        document.getElementById('detail-overlay').classList.remove('show');
+      }
+      document.getElementById('detail-close').addEventListener('click', hideDetailModal);
+      document.getElementById('detail-overlay').addEventListener('click', function(e) {
+        if (e.target === this) hideDetailModal();
+      });
 
       function renderHistory() {
         const entries = getEntries();
@@ -880,10 +972,17 @@
           const summary = [entry.morning && '朝ケア', entry.evening && '夜ケア', entry.meals && '食事', entry.stool && '便', entry.cosmetics && 'メイク'].filter(Boolean).join('・') || '（未記入）';
           const div = document.createElement('div');
           div.className = 'log-item';
+          div.dataset.date = entry.date;
           var photoHtml = entry.photo ? '<img src="' + entry.photo + '" alt="" class="log-photo" />' : '';
           div.innerHTML = '<span class="date">' + formatDate(entry.date) + '</span>' +
             (entry.skin != null ? '<span class="skin-badge ' + skinClass(entry.skin) + '">肌' + entry.skin + '（' + skinLabel(entry.skin) + '）</span>' : '') +
             '<p class="summary">' + summary + '</p>' + photoHtml;
+          (function(entryDate) {
+            div.addEventListener('click', function() {
+              var e = getEntries().find(function(x) { return x.date === entryDate; });
+              if (e) showDetailModal(e);
+            });
+          })(entry.date);
           list.appendChild(div);
         });
       }
