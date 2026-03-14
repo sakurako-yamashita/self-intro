@@ -1,0 +1,368 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My Profile｜山下桜子</title>
+    <meta property="og:title" content="My Profile｜山下桜子" />
+    <meta property="og:type" content="website" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;700;800&display=swap" rel="stylesheet" />
+    <style>
+      :root {
+        --bg: #fffacd;
+        --bg-light: #fffde7;
+        --yellow: #ffefd5;
+        --gold: #e6c200;
+        --gold-strong: #c9a227;
+        --yellow-star: #ffd700;
+        --white: #fff;
+        --ink: #333;
+      }
+
+      * { box-sizing: border-box; }
+
+      html, body {
+        margin: 0;
+        min-height: 100%;
+        font-family: "M PLUS Rounded 1c", "Hiragino Maru Gothic ProN", "Hiragino Kaku Gothic ProN", sans-serif;
+        color: var(--ink);
+      }
+
+      .page {
+        position: relative;
+        min-height: 100vh;
+        padding: 20px 16px 40px;
+        background: var(--bg);
+        background-image:
+          linear-gradient(180deg, rgba(255,255,255,0.5) 0%, transparent 50%),
+          radial-gradient(circle at 15% 20%, rgba(255,253,231,0.9) 0%, transparent 40%),
+          radial-gradient(circle at 85% 80%, rgba(255,235,150,0.4) 0%, transparent 45%);
+        overflow-x: hidden;
+      }
+
+      .page::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        background-image:
+          radial-gradient(circle at 20% 30%, rgba(255,255,255,0.7) 0%, transparent 45%),
+          radial-gradient(circle at 80% 20%, rgba(255,255,255,0.5) 0%, transparent 40%),
+          radial-gradient(circle at 40% 80%, rgba(255,248,220,0.6) 0%, transparent 45%);
+        pointer-events: none;
+        z-index: 0;
+      }
+
+      .bubbles {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: 0;
+      }
+
+      .bubbles span {
+        position: absolute;
+        border-radius: 50%;
+        background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.85), rgba(255,235,150,0.35));
+        border: 1px solid rgba(255,255,255,0.8);
+      }
+
+      .bubbles .b1 { width: 60px; height: 60px; top: 8%; left: 5%; }
+      .bubbles .b2 { width: 40px; height: 40px; top: 15%; right: 10%; }
+      .bubbles .b3 { width: 35px; height: 35px; top: 45%; left: 8%; }
+      .bubbles .b4 { width: 50px; height: 50px; top: 70%; right: 5%; }
+      .bubbles .b5 { width: 30px; height: 30px; top: 35%; right: 25%; }
+      .bubbles .b6 { width: 45px; height: 45px; top: 55%; left: 15%; }
+      .bubbles .b7 { width: 25px; height: 25px; top: 80%; left: 30%; }
+      .bubbles .b8 { width: 55px; height: 55px; top: 25%; right: 15%; }
+
+      .stars {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: 0;
+      }
+
+      .stars span {
+        position: absolute;
+        color: var(--yellow-star);
+        font-size: 16px;
+        opacity: 0.95;
+        text-shadow: 0 0 8px rgba(255,215,0,0.4);
+      }
+
+      .stars .s1 { top: 5%; left: 12%; font-size: 18px; }
+      .stars .s2 { top: 12%; right: 8%; }
+      .stars .s3 { top: 22%; left: 3%; font-size: 14px; }
+      .stars .s4 { top: 35%; right: 20%; font-size: 20px; }
+      .stars .s5 { top: 50%; left: 5%; }
+      .stars .s6 { top: 65%; right: 8%; font-size: 18px; }
+      .stars .s7 { top: 78%; left: 18%; }
+      .stars .s8 { top: 88%; right: 12%; font-size: 14px; }
+
+      .sparkles {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: 0;
+      }
+
+      .sparkles span {
+        position: absolute;
+        width: 4px;
+        height: 4px;
+        border-radius: 50%;
+        background: var(--yellow-star);
+        opacity: 0.8;
+      }
+
+      .sparkles .sp1 { top: 10%; left: 20%; }
+      .sparkles .sp2 { top: 25%; right: 15%; }
+      .sparkles .sp3 { top: 40%; left: 8%; }
+      .sparkles .sp4 { top: 55%; right: 25%; }
+      .sparkles .sp5 { top: 70%; left: 18%; }
+      .sparkles .sp6 { top: 85%; right: 10%; }
+
+      .wrap {
+        position: relative;
+        z-index: 1;
+        max-width: 520px;
+        margin: 0 auto;
+      }
+
+      .section {
+        background: rgba(255, 255, 255, 0.85);
+        border-radius: 24px;
+        padding: 20px 18px;
+        margin-bottom: 20px;
+        border: 2px solid rgba(255, 235, 150, 0.8);
+        box-shadow: 0 8px 24px rgba(201, 162, 39, 0.12);
+      }
+
+      .section-title {
+        font-size: 22px;
+        font-weight: 800;
+        color: var(--gold-strong);
+        margin: 0 0 16px 0;
+        text-align: center;
+        letter-spacing: 0.02em;
+      }
+
+      .section-title.sub {
+        font-size: 13px;
+        color: var(--gold);
+        font-weight: 700;
+        margin-bottom: 6px;
+      }
+
+      .profile-header {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: flex-start;
+        gap: 16px;
+        margin-bottom: 18px;
+      }
+
+      .profile-photo-wrap {
+        flex-shrink: 0;
+        text-align: center;
+      }
+
+      .profile-photo-label {
+        font-size: 11px;
+        color: var(--gold);
+        margin-bottom: 4px;
+      }
+
+      .profile-photo {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        overflow: hidden;
+        border: 3px solid rgba(255, 215, 0, 0.7);
+        background: linear-gradient(145deg, #fff4c4 0%, #ffefd5 100%);
+        box-shadow: 0 4px 16px rgba(201, 162, 39, 0.15);
+      }
+
+      .profile-photo img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .profile-fields {
+        flex: 1;
+        min-width: 200px;
+      }
+
+      .profile-row {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: baseline;
+        gap: 8px 12px;
+        margin-bottom: 10px;
+      }
+
+      .profile-row label {
+        font-size: 14px;
+        font-weight: 700;
+        min-width: 5em;
+      }
+
+      .profile-row label.name { color: #e05a6e; }
+      .profile-row label.nick { color: #c9a227; }
+      .profile-row label.bday { color: #d4a84b; }
+
+      .profile-row .value {
+        flex: 1;
+        min-width: 0;
+        font-size: 14px;
+        color: var(--ink);
+        border-bottom: 2px solid rgba(255,255,255,0.9);
+        padding-bottom: 2px;
+      }
+
+      .favorite-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px 12px;
+      }
+
+      .favorite-item {
+        background: rgba(255, 255, 255, 0.95);
+        border-radius: 14px;
+        padding: 10px 12px;
+        border: 1px solid rgba(255, 235, 150, 0.7);
+      }
+
+      .favorite-item .tag {
+        font-size: 11px;
+        color: var(--gold);
+        font-weight: 700;
+        margin-bottom: 4px;
+      }
+
+      .favorite-item .content {
+        font-size: 13px;
+        color: var(--ink);
+      }
+
+      .free-talk {
+        min-height: 120px;
+        background: rgba(255, 255, 255, 0.95);
+        border-radius: 16px;
+        padding: 14px 16px;
+        font-size: 14px;
+        line-height: 1.7;
+        color: var(--ink);
+        border: 1px solid rgba(255, 235, 150, 0.7);
+      }
+
+      .footer-note {
+        text-align: center;
+        font-size: 11px;
+        color: rgba(0,0,0,0.4);
+        margin-top: 24px;
+      }
+
+      .link-top {
+        display: inline-block;
+        margin-top: 16px;
+        font-size: 13px;
+        font-weight: 700;
+        color: var(--gold-strong);
+        text-decoration: none;
+      }
+
+      .link-top:hover { text-decoration: underline; }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+      <div class="bubbles" aria-hidden="true">
+        <span class="b1"></span><span class="b2"></span><span class="b3"></span><span class="b4"></span>
+        <span class="b5"></span><span class="b6"></span><span class="b7"></span><span class="b8"></span>
+      </div>
+      <div class="stars" aria-hidden="true">
+        <span class="s1">★</span><span class="s2">★</span><span class="s3">★</span><span class="s4">★</span>
+        <span class="s5">★</span><span class="s6">★</span><span class="s7">★</span><span class="s8">★</span>
+      </div>
+      <div class="sparkles" aria-hidden="true">
+        <span class="sp1"></span><span class="sp2"></span><span class="sp3"></span>
+        <span class="sp4"></span><span class="sp5"></span><span class="sp6"></span>
+      </div>
+
+      <div class="wrap">
+        <section class="section" aria-label="My Profile">
+          <h2 class="section-title">My Profile</h2>
+          <div class="profile-header">
+            <div class="profile-photo-wrap">
+              <p class="profile-photo-label">にがおえ・しゃしん</p>
+              <div class="profile-photo">
+                <img src="./assets/illustration.png" alt="山下桜子" />
+              </div>
+            </div>
+            <div class="profile-fields">
+              <div class="profile-row">
+                <label class="name">名前</label>
+                <span class="value">山下 桜子</span>
+              </div>
+              <div class="profile-row">
+                <label class="nick">ニックネーム</label>
+                <span class="value">ピコ</span>
+              </div>
+              <div class="profile-row">
+                <label class="bday">誕生日</label>
+                <span class="value">4月9日</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="section" aria-label="MY FAVORITE">
+          <p class="section-title sub">お気に入りなもの</p>
+          <h2 class="section-title">MY FAVORITE</h2>
+          <div class="favorite-grid">
+            <div class="favorite-item">
+              <p class="tag">#たべもの</p>
+              <p class="content">フルーツ、チョコ</p>
+            </div>
+            <div class="favorite-item">
+              <p class="tag">#のみもの</p>
+              <p class="content">コーヒー（最近はデカフェ！）</p>
+            </div>
+            <div class="favorite-item">
+              <p class="tag">#いろ</p>
+              <p class="content">黄色</p>
+            </div>
+            <div class="favorite-item">
+              <p class="tag">#ばしょ</p>
+              <p class="content">スタバ</p>
+            </div>
+            <div class="favorite-item">
+              <p class="tag">#どうぶつ</p>
+              <p class="content">犬（ポメラニアン）</p>
+            </div>
+            <div class="favorite-item">
+              <p class="tag">#どうが・TV</p>
+              <p class="content">タイプロにハマってました！</p>
+            </div>
+          </div>
+          <p class="footer-note">好きなものを入れてね</p>
+        </section>
+
+        <section class="section" aria-label="FREE TALK">
+          <h2 class="section-title">FREE TALK</h2>
+          <div class="free-talk">
+            最近、Netflixで配信されていた、タイプロにハマっていて、その流れでタイムレスのライブに行ってきました♪ 久しぶりのライブだったので、会場の空気感や生の音を感じられてとても楽しかったです。これをきっかけに、これからはいろんなアーティストのライブにも足を運んで、音楽をもっと身近に楽しみたいな～と思っています！
+          </div>
+        </section>
+
+        <p style="text-align:center;">
+          <a href="index.html" class="link-top">← プロフィールトップへ</a>
+        </p>
+      </div>
+    </div>
+  </body>
+</html>
