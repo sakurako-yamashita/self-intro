@@ -42,6 +42,7 @@
         margin: 0 auto;
         padding: 24px 20px;
         padding-bottom: 40px;
+        overflow-x: hidden;
       }
       h1 {
         font-family: var(--font-display);
@@ -91,6 +92,7 @@
         padding: 24px 22px;
         border: 1px solid var(--border);
         box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+        min-width: 0;
       }
       .panel.active { display: block; }
 
@@ -109,12 +111,19 @@
       .field select,
       .field textarea {
         width: 100%;
+        max-width: 100%;
+        min-width: 0;
         padding: 11px 14px;
         border: 1px solid var(--border);
         border-radius: 10px;
         font-family: var(--font-body);
         font-size: 0.95rem;
         color: var(--ink);
+        box-sizing: border-box;
+      }
+      .field input[type="date"] {
+        -webkit-appearance: none;
+        appearance: none;
       }
       .field textarea {
         min-height: 80px;
@@ -411,6 +420,19 @@
             <input type="text" id="morning-other" placeholder="その他（自由入力）" class="field-other" />
           </div>
           <div class="field">
+            <label>使った化粧品（メイク）</label>
+            <div class="dropdown-row">
+              <select id="cosmetics-select"><option value="">登録済みから選ぶ</option></select>
+              <button type="button" class="btn-add" id="cosmetics-add">追加</button>
+            </div>
+            <div id="cosmetics-chips" class="chips"></div>
+            <input type="text" id="cosmetics-other" placeholder="その他（自由入力）" class="field-other" />
+          </div>
+          <div class="field">
+            <label for="meals">食事（何を食べたか）</label>
+            <textarea id="meals" placeholder="例：朝：パン 昼：弁当 夜：和食"></textarea>
+          </div>
+          <div class="field">
             <label>夜のスキンケア（使ったもの）</label>
             <div class="dropdown-row">
               <select id="evening-select"><option value="">登録済みから選ぶ</option></select>
@@ -420,26 +442,13 @@
             <input type="text" id="evening-other" placeholder="その他（自由入力）" class="field-other" />
           </div>
           <div class="field">
-            <label for="meals">食事（何を食べたか）</label>
-            <textarea id="meals" placeholder="例：朝：パン 昼：弁当 夜：和食"></textarea>
-          </div>
-          <div class="field">
             <label for="stool">便の状態</label>
             <select id="stool">
               <option value="">選んでください</option>
-              <option value="good">良い</option>
-              <option value="normal">普通</option>
-              <option value="bad">悪い</option>
+              <option value="yes">出た</option>
+              <option value="no">出なかった</option>
+              <option value="bad">出たが調子が悪い</option>
             </select>
-          </div>
-          <div class="field">
-            <label>使った化粧品（メイク）</label>
-            <div class="dropdown-row">
-              <select id="cosmetics-select"><option value="">登録済みから選ぶ</option></select>
-              <button type="button" class="btn-add" id="cosmetics-add">追加</button>
-            </div>
-            <div id="cosmetics-chips" class="chips"></div>
-            <input type="text" id="cosmetics-other" placeholder="その他（自由入力）" class="field-other" />
           </div>
           <div class="field">
             <label>その日の肌状態（1〜5）</label>
@@ -458,16 +467,16 @@
             <p class="hint">5が一番良い状態です</p>
           </div>
           <div class="field">
-            <label>写真（任意）</label>
+            <label for="notes">メモ</label>
+            <textarea id="notes" placeholder="気になったことなど"></textarea>
+          </div>
+          <div class="field">
+            <label>写真</label>
             <div class="photo-upload">
               <input type="file" id="photo-input" accept="image/*" />
               <label for="photo-input" class="upload-btn">写真を選ぶ</label>
               <div id="photo-preview" class="photo-preview-wrap" style="display:none;"></div>
             </div>
-          </div>
-          <div class="field">
-            <label for="notes">メモ（任意）</label>
-            <textarea id="notes" placeholder="気になったことなど"></textarea>
           </div>
           <button type="submit" class="btn">保存する</button>
         </form>
@@ -665,7 +674,7 @@
           document.getElementById('panel-' + panelId).classList.add('active');
           if (panelId === 'history') renderHistory();
           if (panelId === 'stats') renderStats();
-          if (panelId === 'record') refreshItemOptions();
+          if (panelId === 'record') { refreshItemOptions(); loadEntryForDate(document.getElementById('log-date').value); }
           if (panelId === 'items') renderItemLists();
         });
       });
@@ -676,6 +685,69 @@
         document.querySelectorAll('.period-btn').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
         renderStats();
+      });
+
+      function parseItemsFromString(str) {
+        if (!str || !str.trim()) return [];
+        return str.split(/[、,　\s]+/).map(function(s) { return s.trim(); }).filter(Boolean);
+      }
+      function loadEntryIntoForm(entry) {
+        document.getElementById('log-date').value = entry.date;
+        var morningParts = parseItemsFromString(entry.morning);
+        selectedMorning = morningParts;
+        renderChips('morning-chips', selectedMorning);
+        document.getElementById('morning-other').value = '';
+        var cosmeticsParts = parseItemsFromString(entry.cosmetics);
+        selectedCosmetics = cosmeticsParts;
+        renderChips('cosmetics-chips', selectedCosmetics);
+        document.getElementById('cosmetics-other').value = '';
+        document.getElementById('meals').value = entry.meals || '';
+        var eveningParts = parseItemsFromString(entry.evening);
+        selectedEvening = eveningParts;
+        renderChips('evening-chips', selectedEvening);
+        document.getElementById('evening-other').value = '';
+        document.getElementById('stool').value = entry.stool || '';
+        if (entry.skin != null) {
+          var skinEl = document.querySelector('input[name="skin"][value="' + entry.skin + '"]');
+          if (skinEl) skinEl.checked = true;
+        } else {
+          document.querySelectorAll('input[name="skin"]').forEach(function(el) { el.checked = false; });
+        }
+        document.getElementById('notes').value = entry.notes || '';
+        currentPhotoData = entry.photo || null;
+        var wrap = document.getElementById('photo-preview');
+        wrap.innerHTML = '';
+        wrap.style.display = 'none';
+        document.getElementById('photo-input').value = '';
+        if (currentPhotoData) showPhotoPreview(currentPhotoData);
+      }
+      function loadEntryForDate(dateStr) {
+        var entries = getEntries();
+        var entry = entries.find(function(e) { return e.date === dateStr; });
+        if (entry) loadEntryIntoForm(entry);
+        else {
+          selectedMorning = [];
+          selectedEvening = [];
+          selectedCosmetics = [];
+          renderChips('morning-chips', selectedMorning);
+          renderChips('evening-chips', selectedEvening);
+          renderChips('cosmetics-chips', selectedCosmetics);
+          document.getElementById('morning-other').value = '';
+          document.getElementById('evening-other').value = '';
+          document.getElementById('cosmetics-other').value = '';
+          document.getElementById('meals').value = '';
+          document.getElementById('stool').value = '';
+          document.querySelectorAll('input[name="skin"]').forEach(function(el) { el.checked = false; });
+          document.getElementById('notes').value = '';
+          currentPhotoData = null;
+          var wrap = document.getElementById('photo-preview');
+          wrap.innerHTML = '';
+          wrap.style.display = 'none';
+          document.getElementById('photo-input').value = '';
+        }
+      }
+      document.getElementById('log-date').addEventListener('change', function() {
+        loadEntryForDate(this.value);
       });
 
       function collectField(chips, otherId) {
@@ -742,11 +814,9 @@
         else entries.push(entry);
         entries.sort(function(a, b) { return b.date.localeCompare(a.date); });
         saveEntries(entries);
-        document.getElementById('form-log').reset();
-        document.getElementById('log-date').value = new Date().toISOString().slice(0, 10);
-        clearChips();
+        loadEntryIntoForm(entry);
         renderHistory();
-        alert('保存しました');
+        alert('保存しました。続けて追記・編集できます。');
       });
 
       document.getElementById('export-btn').addEventListener('click', function() {
@@ -869,15 +939,16 @@
         if (goodDays.length > 0) {
           const productCount = {};
           const foodCount = {};
-          const stoolCount = { good: 0, normal: 0, bad: 0 };
+          const stoolCount = { yes: 0, no: 0, bad: 0 };
           goodDays.forEach(e => {
             parseItems(e.morning + ' ' + e.evening).forEach(p => { productCount[p] = (productCount[p] || 0) + 1; });
             parseItems(e.meals).forEach(f => { foodCount[f] = (foodCount[f] || 0) + 1; });
-            if (e.stool) stoolCount[e.stool] = (stoolCount[e.stool] || 0) + 1;
+            if (e.stool && stoolCount.hasOwnProperty(e.stool)) stoolCount[e.stool] = (stoolCount[e.stool] || 0) + 1;
           });
           const topProducts = Object.entries(productCount).sort((a, b) => b[1] - a[1]).slice(0, 10);
           const topFood = Object.entries(foodCount).sort((a, b) => b[1] - a[1]).slice(0, 8);
-          const stoolStr = Object.entries(stoolCount).filter(([, n]) => n > 0).map(([k, n]) => (k === 'good' ? '良い' : k === 'normal' ? '普通' : '悪い') + ' ' + n + '回').join('、');
+          var stoolLabels = { yes: '出た', no: '出なかった', bad: '出たが調子が悪い' };
+          const stoolStr = Object.entries(stoolCount).filter(([, n]) => n > 0).map(([k, n]) => (stoolLabels[k] || k) + ' ' + n + '回').join('、');
 
           var comment = 'この期間（' + getPeriodLabel(days) + '）で<strong>肌が良かった日は' + goodDays.length + '日</strong>でした。';
           if (topProducts.length) comment += ' よく使っていたスキンケア・化粧品は「' + topProducts.slice(0, 3).map(function(p) { return p[0]; }).join('」「') + '」など。';
@@ -926,6 +997,7 @@
       document.getElementById('log-date').value = new Date().toISOString().slice(0, 10);
       refreshItemOptions();
       renderItemLists();
+      loadEntryForDate(document.getElementById('log-date').value);
       renderHistory();
     </script>
   </body>
