@@ -1,0 +1,931 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>山下桜子プロフィール</title>
+    <meta property="og:title" content="山下桜子プロフィール" />
+    <meta property="og:type" content="website" />
+    <style>
+      :root {
+        --piano-black: #2c2c2c;
+        --piano-white: #faf9f6;
+        --accent-gold: #c9a227;
+        --accent-rose: #d4a5a5;
+        --accent-cream: #f5f0e8;
+        --ink: #2c2c2c;
+        --card: rgba(255, 252, 248, 0.92);
+        --stroke: rgba(0, 0, 0, 0.06);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        height: 100%;
+      }
+
+      body {
+        margin: 0;
+        font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans JP",
+          "Hiragino Kaku Gothic ProN", "Yu Gothic", "Meiryo", sans-serif;
+        color: var(--ink);
+        overflow-x: hidden;
+      }
+
+      .bg {
+        position: fixed;
+        inset: 0;
+        background:
+          radial-gradient(1000px 700px at 15% 15%, rgba(255, 105, 180, 0.08), transparent 50%),
+          radial-gradient(900px 600px at 85% 20%, rgba(135, 206, 250, 0.1), transparent 52%),
+          radial-gradient(900px 600px at 20% 85%, rgba(255, 239, 213, 0.12), transparent 52%),
+          radial-gradient(800px 500px at 20% 20%, rgba(201, 162, 39, 0.14), transparent 55%),
+          radial-gradient(800px 500px at 80% 25%, rgba(212, 165, 165, 0.16), transparent 55%),
+          linear-gradient(180deg, #fefcf9 0%, #fdfbf7 35%, #faf6f0 70%, #f5f0e8 100%);
+      }
+
+      .bg::before,
+      .bg::after {
+        content: "";
+        position: absolute;
+        inset: -20%;
+        background: conic-gradient(
+          from 200deg,
+          rgba(201, 162, 39, 0.06),
+          rgba(212, 165, 165, 0.08),
+          rgba(245, 240, 232, 0.1),
+          rgba(201, 162, 39, 0.05)
+        );
+        filter: blur(26px);
+        animation: floaty 14s ease-in-out infinite;
+        mix-blend-mode: multiply;
+        opacity: 0.85;
+      }
+
+      .bg::after {
+        animation-duration: 19s;
+        animation-direction: reverse;
+        opacity: 0.65;
+      }
+
+      @keyframes floaty {
+        0% {
+          transform: translate3d(-2%, -1%, 0) rotate(-2deg) scale(1.03);
+        }
+        50% {
+          transform: translate3d(2%, 1.5%, 0) rotate(2deg) scale(1.06);
+        }
+        100% {
+          transform: translate3d(-2%, -1%, 0) rotate(-2deg) scale(1.03);
+        }
+      }
+
+      .wrap {
+        position: relative;
+        min-height: 100%;
+        padding: 28px 20px 56px;
+        display: grid;
+        place-items: start center;
+      }
+
+      .card {
+        width: min(1040px, 100%);
+        border-radius: 28px;
+        padding: clamp(22px, 4vw, 42px);
+        background: var(--card);
+        border: 1px solid var(--stroke);
+        box-shadow: 0 28px 80px rgba(44, 44, 44, 0.1), 0 0 0 1px rgba(255, 255, 255, 0.5) inset;
+        backdrop-filter: blur(14px);
+        -webkit-backdrop-filter: blur(14px);
+      }
+
+      .hero {
+        padding-bottom: 24px;
+      }
+
+      .profileCard {
+        padding: 24px 28px 28px;
+        border-radius: 20px;
+        background: linear-gradient(165deg, rgba(255, 255, 255, 0.98) 0%, rgba(253, 251, 247, 0.98) 50%, rgba(250, 247, 242, 0.98) 100%);
+        border: 1px solid rgba(44, 44, 44, 0.08);
+        box-shadow: 0 12px 40px rgba(44, 44, 44, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+      }
+
+      .profileCard-header {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        margin-bottom: 20px;
+      }
+
+      .profileCard-title {
+        margin: 0;
+        font-size: clamp(26px, 4vw, 38px);
+        font-weight: 800;
+        letter-spacing: -0.02em;
+        color: var(--piano-black);
+      }
+
+      .profileCard-date {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 15px;
+        color: rgba(44, 44, 44, 0.8);
+      }
+
+      .profileCard-row {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        gap: 24px;
+        align-items: start;
+      }
+
+      .profileCard-fields {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+      }
+
+      .profileCard-field {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: baseline;
+        gap: 8px 12px;
+      }
+
+      .profileCard-field label {
+        font-size: 14px;
+        font-weight: 600;
+        color: rgba(44, 44, 44, 0.7);
+        min-width: 4.5em;
+      }
+
+      .profileCard-field .value {
+        flex: 1;
+        min-width: 120px;
+        font-size: 15px;
+        color: var(--ink);
+        border-bottom: 1px solid rgba(44, 44, 44, 0.2);
+        padding-bottom: 2px;
+      }
+
+      .profileCard-fieldRow {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+      }
+
+      .profileCard-portraitWrap {
+        text-align: center;
+      }
+
+      .profileCard-photo {
+        width: 140px;
+        height: 140px;
+        flex-shrink: 0;
+        border-radius: 12px;
+        overflow: hidden;
+        border: 1px solid rgba(44, 44, 44, 0.1);
+        box-shadow: 0 8px 24px rgba(44, 44, 44, 0.1);
+        display: grid;
+        place-items: center;
+        background: linear-gradient(145deg, #f5f0e8 0%, #ebe5dc 100%);
+      }
+
+      .profileCard-photo img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .profileCard-photoMobile {
+        display: none;
+      }
+
+      .profileCard-nameRow {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 12px 20px;
+      }
+
+      .profileCard-nameRow .value { border-bottom: 1px solid rgba(44, 44, 44, 0.2); padding-bottom: 2px; }
+
+      .profileCard-pomWrap {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 6px 12px;
+        border: 2px solid rgba(201, 162, 39, 0.5);
+        border-radius: 12px;
+        background: rgba(255, 252, 248, 0.9);
+        box-shadow: 0 2px 8px rgba(44, 44, 44, 0.06);
+      }
+
+      .profileCard-pomWrap .pomeranian-svg { width: 28px; height: 28px; flex-shrink: 0; }
+      .profileCard-pomWrap .pomLabel { font-size: 13px; font-weight: 600; color: rgba(44, 44, 44, 0.85); }
+
+      @media (max-width: 600px) {
+        .profileCard {
+          padding: 16px 18px 20px;
+        }
+        .profileCard-header {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 8px;
+          margin-bottom: 16px;
+        }
+        .profileCard-title {
+          font-size: 22px;
+        }
+        .profileCard-date {
+          font-size: 14px;
+        }
+        .profileCard-row {
+          grid-template-columns: 1fr;
+          gap: 18px;
+        }
+        .profileCard-portraitWrap {
+          display: none;
+        }
+        .profileCard-photoMobile {
+          display: grid;
+          width: 56px;
+          height: 56px;
+          min-width: 56px;
+          min-height: 56px;
+          border-radius: 10px;
+        }
+        .profileCard-photoMobile img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+        .profileCard-fields {
+          gap: 14px;
+        }
+        .profileCard-field {
+          flex-direction: column;
+          align-items: stretch;
+          gap: 4px;
+        }
+        .profileCard-field label {
+          min-width: auto;
+          font-size: 13px;
+        }
+        .profileCard-field .value {
+          min-width: 0;
+          font-size: 14px;
+        }
+        .profileCard-nameRow {
+          flex-direction: row;
+          flex-wrap: wrap;
+          align-items: center;
+          gap: 10px 12px;
+        }
+        .profileCard-nameRow .value {
+          width: auto;
+        }
+        .profileCard-pomWrap {
+          align-self: flex-start;
+          padding: 5px 10px;
+        }
+        .profileCard-pomWrap .pomeranian-svg {
+          width: 24px;
+          height: 24px;
+        }
+        .profileCard-pomWrap .pomLabel {
+          font-size: 12px;
+        }
+        .profileCard-fieldRow {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      .grid {
+        margin-top: 26px;
+        display: grid;
+        gap: 16px;
+        grid-template-columns: repeat(12, 1fr);
+      }
+
+      .stepMap {
+        margin-top: 18px;
+        margin-bottom: 8px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        align-items: center;
+        justify-content: center;
+      }
+
+      @media (min-width: 720px) {
+        .stepMap {
+          display: grid;
+          grid-template-columns: repeat(4, 1fr);
+          gap: 10px;
+          max-width: 640px;
+          margin-left: auto;
+          margin-right: auto;
+        }
+        .stepNode { justify-self: center; }
+      }
+
+      .stepNode {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 8px 12px;
+        border-radius: 999px;
+        border: 1px solid rgba(44, 44, 44, 0.12);
+        background: rgba(255, 252, 248, 0.95);
+        box-shadow: 0 6px 20px rgba(44, 44, 44, 0.06);
+        font-size: 14px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease,
+          background-color 0.15s ease;
+      }
+
+      .stepNode-badge {
+        min-width: 26px;
+        height: 26px;
+        border-radius: 999px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 13px;
+        font-weight: 800;
+        color: #fff;
+        background: linear-gradient(135deg, var(--piano-black), #5c4a3a);
+        box-shadow: 0 2px 8px rgba(44, 44, 44, 0.2);
+      }
+
+      .stepNode-label {
+        white-space: nowrap;
+        color: var(--ink);
+        letter-spacing: 0.02em;
+      }
+
+      .stepNode.is-active {
+        transform: translateY(-2px);
+        border-color: var(--accent-gold);
+        background: linear-gradient(135deg, rgba(255, 252, 248, 0.98), rgba(249, 245, 235, 0.98));
+        box-shadow: 0 12px 32px rgba(201, 162, 39, 0.22);
+      }
+
+      .panel {
+        border-radius: 22px;
+        background: rgba(255, 252, 248, 0.85);
+        border: 1px solid rgba(44, 44, 44, 0.06);
+        padding: 18px 18px 16px;
+        box-shadow: 0 12px 40px rgba(44, 44, 44, 0.06);
+      }
+
+      .panel[data-step] {
+        position: relative;
+        transition: box-shadow 0.18s ease, transform 0.18s ease, border-color 0.18s ease;
+      }
+
+      .panel[data-step].is-active {
+        border-color: var(--accent-gold);
+        box-shadow: 0 16px 48px rgba(201, 162, 39, 0.18);
+        transform: translateY(-2px);
+      }
+
+      .panel h2 {
+        margin: 0 0 12px 0;
+        font-size: 18px;
+        font-weight: 800;
+        letter-spacing: 0.04em;
+        color: var(--ink);
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 999px;
+        background: linear-gradient(135deg, var(--accent-gold), #a68b5c);
+        box-shadow: 0 0 0 4px rgba(201, 162, 39, 0.2);
+      }
+
+      .list {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        display: grid;
+        gap: 10px;
+      }
+
+      .item {
+        display: grid;
+        gap: 6px;
+        padding: 12px 12px;
+        border-radius: 16px;
+        background: rgba(255, 252, 248, 0.7);
+        border: 1px solid rgba(44, 44, 44, 0.04);
+      }
+
+      .item strong {
+        font-size: 16px;
+        letter-spacing: 0.01em;
+      }
+
+      .item span {
+        color: rgba(44, 44, 44, 0.82);
+        line-height: 1.65;
+      }
+
+      .mission {
+        position: relative;
+        overflow: hidden;
+      }
+
+      .mission::before {
+        content: "";
+        position: absolute;
+        inset: -40%;
+        background: radial-gradient(closest-side at 30% 30%, rgba(201, 162, 39, 0.12), transparent 55%),
+          radial-gradient(closest-side at 75% 35%, rgba(212, 165, 165, 0.1), transparent 55%);
+        filter: blur(10px);
+        opacity: 0.95;
+        pointer-events: none;
+      }
+
+      .mission p {
+        position: relative;
+        margin: 0;
+        font-size: clamp(18px, 2.2vw, 24px);
+        line-height: 1.75;
+        color: rgba(44, 44, 44, 0.9);
+      }
+
+      .hl {
+        font-weight: 800;
+        background: linear-gradient(90deg, rgba(201, 162, 39, 0.2), rgba(212, 165, 165, 0.15));
+        padding: 2px 6px;
+        border-radius: 8px;
+      }
+
+      .hl-strong {
+        font-weight: 800;
+        color: var(--piano-black);
+        background: rgba(255, 105, 180, 0.2);
+        padding: 2px 6px;
+        border-radius: 6px;
+        border: 1px solid rgba(255, 105, 180, 0.35);
+      }
+
+      .hl-shape {
+        font-weight: 800;
+        color: var(--piano-black);
+        background: rgba(201, 162, 39, 0.25);
+        padding: 2px 6px;
+        border-radius: 6px;
+      }
+
+      .timeline {
+        display: grid;
+        gap: 10px;
+      }
+
+      .step {
+        display: grid;
+        grid-template-columns: 92px 1fr;
+        gap: 12px;
+        align-items: start;
+        padding: 12px 12px;
+        border-radius: 16px;
+        background: rgba(255, 252, 248, 0.7);
+        border: 1px solid rgba(44, 44, 44, 0.04);
+      }
+
+      .tag {
+        font-weight: 800;
+        font-size: 12px;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        color: rgba(44, 44, 44, 0.75);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 8px 10px;
+        border-radius: 999px;
+        background: rgba(255, 252, 248, 0.9);
+        border: 1px solid rgba(44, 44, 44, 0.06);
+        width: fit-content;
+      }
+
+      .step p {
+        margin: 0;
+        color: rgba(44, 44, 44, 0.85);
+        line-height: 1.65;
+      }
+
+      .cols-6 { grid-column: span 6; }
+      .cols-7 { grid-column: span 7; }
+      .cols-5 { grid-column: span 5; }
+      .cols-12 { grid-column: span 12; }
+
+      @media (max-width: 900px) {
+        .heroRow {
+          grid-template-columns: 1fr;
+        }
+
+        .cols-7,
+        .cols-6,
+        .cols-5 {
+          grid-column: span 12;
+        }
+
+        .step {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      .sparkles {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        opacity: 0.9;
+      }
+
+      .sparkles i {
+        position: absolute;
+        width: 8px;
+        height: 8px;
+        border-radius: 999px;
+        background: var(--accent-gold);
+        opacity: 0.6;
+        box-shadow: 0 0 0 4px rgba(201, 162, 39, 0.15);
+        animation: twinkle 3.8s ease-in-out infinite;
+      }
+
+      .sparkles i:nth-child(1) { top: 12%; left: 14%; animation-delay: -0.6s; transform: scale(0.9); }
+      .sparkles i:nth-child(2) { top: 22%; left: 82%; animation-delay: -2.2s; transform: scale(0.7); }
+      .sparkles i:nth-child(3) { top: 78%; left: 16%; animation-delay: -1.4s; transform: scale(0.85); }
+      .sparkles i:nth-child(4) { top: 70%; left: 86%; animation-delay: -3.1s; transform: scale(0.65); }
+      .sparkles i:nth-child(5) { top: 44%; left: 6%; animation-delay: -1.9s; transform: scale(0.55); }
+      .sparkles i:nth-child(6) { top: 48%; left: 94%; animation-delay: -0.9s; transform: scale(0.6); }
+
+      @keyframes twinkle {
+        0% {
+          opacity: 0.35;
+          transform: translateY(0) scale(0.75);
+        }
+        50% {
+          opacity: 1;
+          transform: translateY(-10px) scale(1.05);
+        }
+        100% {
+          opacity: 0.35;
+          transform: translateY(0) scale(0.75);
+        }
+      }
+
+      .notes-deco {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        overflow: hidden;
+        z-index: 0;
+      }
+
+      .notes-deco span {
+        position: absolute;
+        font-size: clamp(22px, 2.5vw, 36px);
+        opacity: 0.5;
+        line-height: 1;
+      }
+
+      .notes-deco .note-pink { color: #ff69b4; }
+      .notes-deco .note-cream { color: #ffefd5; }
+      .notes-deco .note-sky { color: #87cefa; }
+
+      .notes-deco .n1 { top: 4%; left: 3%; transform: rotate(-12deg); }
+      .notes-deco .n2 { top: 10%; right: 5%; transform: rotate(8deg); }
+      .notes-deco .n3 { top: 18%; left: 8%; transform: rotate(-5deg); }
+      .notes-deco .n4 { top: 28%; right: 2%; transform: rotate(15deg); }
+      .notes-deco .n5 { top: 38%; left: 2%; transform: rotate(-8deg); }
+      .notes-deco .n6 { top: 48%; right: 10%; transform: rotate(6deg); }
+      .notes-deco .n7 { top: 58%; left: 6%; transform: rotate(-15deg); }
+      .notes-deco .n8 { top: 68%; right: 4%; transform: rotate(10deg); }
+      .notes-deco .n9 { top: 76%; left: 8%; transform: rotate(-6deg); }
+      .notes-deco .n10 { top: 86%; right: 8%; transform: rotate(12deg); }
+      .notes-deco .n11 { top: 14%; left: 22%; transform: rotate(5deg); }
+      .notes-deco .n12 { top: 52%; right: 24%; transform: rotate(-10deg); }
+      .notes-deco .n13 { top: 34%; left: 16%; transform: rotate(7deg); }
+      .notes-deco .n14 { top: 64%; left: 18%; transform: rotate(-7deg); }
+      .notes-deco .n15 { top: 8%; right: 20%; transform: rotate(-5deg); }
+      .notes-deco .n16 { top: 24%; right: 14%; transform: rotate(3deg); }
+      .notes-deco .n17 { top: 62%; left: 12%; transform: rotate(-8deg); }
+      .notes-deco .n18 { top: 74%; right: 16%; transform: rotate(5deg); }
+      .notes-deco .n19 { top: 42%; left: 6%; transform: rotate(-3deg); }
+      .notes-deco .n20 { top: 44%; right: 18%; transform: rotate(9deg); }
+      .notes-deco .n21 { top: 22%; left: 28%; transform: rotate(-9deg); }
+      .notes-deco .n22 { top: 72%; left: 28%; transform: rotate(6deg); }
+      .notes-deco .n23 { top: 6%; left: 45%; transform: rotate(4deg); }
+      .notes-deco .n24 { top: 90%; left: 35%; transform: rotate(-7deg); }
+      .notes-deco .n25 { top: 50%; left: 32%; transform: rotate(11deg); }
+      .notes-deco .n26 { top: 30%; right: 32%; transform: rotate(-6deg); }
+      .notes-deco .n27 { top: 12%; right: 38%; transform: rotate(8deg); }
+      .notes-deco .n28 { top: 80%; right: 32%; transform: rotate(-4deg); }
+      .notes-deco .n29 { top: 56%; left: 38%; transform: rotate(7deg); }
+      .notes-deco .n30 { top: 16%; left: 52%; transform: rotate(-10deg); }
+    </style>
+  </head>
+  <body>
+    <div class="bg" aria-hidden="true"></div>
+    <div class="notes-deco" aria-hidden="true">
+      <span class="note-pink n1">♪</span><span class="note-cream n2">♩</span><span class="note-sky n3">♪</span>
+      <span class="note-pink n4">♩</span><span class="note-cream n5">♪</span><span class="note-sky n6">♩</span>
+      <span class="note-pink n7">♪</span><span class="note-cream n8">♩</span><span class="note-sky n9">♪</span>
+      <span class="note-pink n10">♩</span><span class="note-cream n11">♪</span><span class="note-pink n12">♩</span>
+      <span class="note-sky n13">♪</span><span class="note-cream n14">♩</span><span class="note-pink n15">♪</span>
+      <span class="note-sky n16">&#119070;</span><span class="note-pink n17">&#119070;</span><span class="note-cream n18">&#119070;</span>
+      <span class="note-pink n19">♪</span><span class="note-cream n20">♩</span><span class="note-sky n21">♪</span>
+      <span class="note-pink n22">♩</span><span class="note-cream n23">♪</span><span class="note-sky n24">♩</span>
+      <span class="note-pink n25">♪</span><span class="note-cream n26">♩</span><span class="note-sky n27">&#119070;</span>
+      <span class="note-pink n28">♪</span><span class="note-cream n29">♩</span><span class="note-sky n30">♪</span>
+    </div>
+    <div class="wrap">
+      <div class="sparkles" aria-hidden="true">
+        <i></i><i></i><i></i><i></i><i></i><i></i>
+      </div>
+      <main class="card" role="main">
+        <header class="hero" aria-label="冒頭（台本 0）">
+          <div class="profileCard">
+            <div class="profileCard-header">
+              <div>
+                <h1 class="profileCard-title">My Data</h1>
+                <a href="profile.html" style="font-size:12px;font-weight:700;color:#c9a227;text-decoration:none;">My Profile（かわいい版）→</a>
+              </div>
+              <p class="profileCard-date" aria-label="今日の日付">
+                <span id="today-year">ねん</span> <span id="today-month">がっ</span> <span id="today-day">にち</span>
+              </p>
+            </div>
+            <div class="profileCard-row">
+              <div class="profileCard-fields">
+                <div class="profileCard-field">
+                  <label>なまえ</label>
+                  <div class="profileCard-nameRow">
+                    <span class="value">山下 桜子</span>
+                    <div class="profileCard-photo profileCard-photoMobile" aria-hidden="true">
+                      <img src="./assets/illustration.png?v=2" alt="" />
+                    </div>
+                    <span class="profileCard-pomWrap">
+                      <svg class="pomeranian-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 220" role="img" aria-label="白いポメラニアン">
+                        <defs>
+                          <linearGradient id="pom-bg" x1="0" x2="1" y1="0" y2="1">
+                            <stop offset="0" stop-color="#ffffff" stop-opacity="0.95"/>
+                            <stop offset="1" stop-color="#f6fbff" stop-opacity="0.95"/>
+                          </linearGradient>
+                          <filter id="pom-shadow" x="-20%" y="-20%" width="140%" height="140%">
+                            <feDropShadow dx="0" dy="8" stdDeviation="10" flood-color="#000" flood-opacity="0.12"/>
+                          </filter>
+                        </defs>
+                        <g filter="url(#pom-shadow)">
+                          <path d="M110 18c36 0 72 24 82 58 10 34-4 74-28 98-24 24-54 30-54 30s-30-6-54-30c-24-24-38-64-28-98C38 42 74 18 110 18Z" fill="url(#pom-bg)" stroke="#e8eef7" stroke-width="3"/>
+                          <path d="M60 96c-10-18-2-46 12-56 10 12 18 22 28 26-10 12-20 18-40 30Z" fill="#fff" stroke="#eef3fb" stroke-width="3"/>
+                          <path d="M160 96c10-18 2-46-12-56-10 12-18 22-28 26 10 12 20 18 40 30Z" fill="#fff" stroke="#eef3fb" stroke-width="3"/>
+                          <path d="M58 138c0-40 28-70 52-70s52 30 52 70c0 32-22 52-52 52s-52-20-52-52Z" fill="#fff" stroke="#eef3fb" stroke-width="3"/>
+                          <circle cx="88" cy="130" r="8" fill="#2a2a33"/>
+                          <circle cx="132" cy="130" r="8" fill="#2a2a33"/>
+                          <circle cx="85" cy="126" r="3" fill="#fff"/>
+                          <circle cx="129" cy="126" r="3" fill="#fff"/>
+                          <path d="M110 146c8 0 14 6 14 12 0 10-10 18-14 18s-14-8-14-18c0-6 6-12 14-12Z" fill="#ff7aa8" opacity="0.9"/>
+                          <path d="M110 148c5 0 8 4 8 8 0 7-5 12-8 12s-8-5-8-12c0-4 3-8 8-8Z" fill="#1f1f28"/>
+                          <path d="M74 150c-10 0-20 10-20 20 0 14 12 26 30 26 8 0 16-2 22-6-18-4-32-18-32-40Z" fill="#fff" stroke="#eef3fb" stroke-width="3"/>
+                          <path d="M146 150c10 0 20 10 20 20 0 14-12 26-30 26-8 0-16-2-22-6 18-4 32-18 32-40Z" fill="#fff" stroke="#eef3fb" stroke-width="3"/>
+                          <path d="M66 96c6 4 14 8 24 12" stroke="#e9eff9" stroke-width="6" stroke-linecap="round"/>
+                          <path d="M154 96c-6 4-14 8-24 12" stroke="#e9eff9" stroke-width="6" stroke-linecap="round"/>
+                        </g>
+                      </svg>
+                      <span class="pomLabel">白いポメラニアンと暮らしています</span>
+                    </span>
+                  </div>
+                </div>
+                <div class="profileCard-field">
+                  <label>活動</label>
+                  <span class="value">ピアノ教室 ・ オンライン塾 ・ YouTube</span>
+                </div>
+                <div class="profileCard-field profileCard-fieldRow">
+                  <div class="profileCard-field">
+                    <label>分野</label>
+                    <span class="value">教育 × クリエイティブ</span>
+                  </div>
+                  <div class="profileCard-field">
+                    <label>役割</label>
+                    <span class="value">経営 ・ 講師 ・ 運用</span>
+                  </div>
+                </div>
+                <div class="profileCard-field">
+                  <label>ひとこと</label>
+                  <span class="value">AIで手作業から脱却し、仕組み化を進めています。</span>
+                </div>
+              </div>
+              <div class="profileCard-portraitWrap">
+                <div class="profileCard-photo" aria-label="プロフィール写真">
+                  <img src="./assets/illustration.png?v=2" alt="山下桜子" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </header>
+
+        <nav class="stepMap" aria-label="4分自己紹介の流れ">
+          <button class="stepNode" type="button" data-step-target="1">
+            <span class="stepNode-badge">1</span>
+            <span class="stepNode-label">全体像</span>
+          </button>
+          <button class="stepNode" type="button" data-step-target="2">
+            <span class="stepNode-badge">2</span>
+            <span class="stepNode-label">ピアノ教室</span>
+          </button>
+          <button class="stepNode" type="button" data-step-target="3">
+            <span class="stepNode-badge">3</span>
+            <span class="stepNode-label">オンライン塾</span>
+          </button>
+          <button class="stepNode" type="button" data-step-target="4">
+            <span class="stepNode-badge">4</span>
+            <span class="stepNode-label">YouTube</span>
+          </button>
+          <button class="stepNode" type="button" data-step-target="5">
+            <span class="stepNode-badge">5</span>
+            <span class="stepNode-label">ミッション</span>
+          </button>
+          <button class="stepNode" type="button" data-step-target="6">
+            <span class="stepNode-badge">6</span>
+            <span class="stepNode-label">パーソナル</span>
+          </button>
+          <button class="stepNode" type="button" data-step-target="7">
+            <span class="stepNode-badge">7</span>
+            <span class="stepNode-label">締め</span>
+          </button>
+        </nav>
+
+        <section class="grid" aria-label="台本（上から順に読む）">
+          <section class="panel cols-12" aria-label="1. 全体像（3本柱）" data-step="1">
+            <h2><span class="dot" aria-hidden="true"></span>1. 全体像｜仕事の3本柱</h2>
+            <ul class="list">
+              <li class="item">
+                <strong>① ピアノ教室 経営</strong>
+                <span>現在は指導も担当。将来的にはオーナー業へ移行できる形にしたい。</span>
+              </li>
+              <li class="item">
+                <strong>② オンライン塾 講師（Canva・動画編集）</strong>
+                <span>操作だけでなく「目的整理 → 最短で形にする」伴走を大切に。</span>
+              </li>
+              <li class="item">
+                <strong>③ YouTube 運用</strong>
+                <span>3ヶ月で収益化達成。現在は“ある出来事”をきっかけに立て直し中。</span>
+              </li>
+            </ul>
+          </section>
+
+          <section class="panel cols-6" aria-label="2. ピアノ教室（現状と目標）" data-step="2">
+            <h2><span class="dot" aria-hidden="true"></span>2. ピアノ教室｜現状 → 目標</h2>
+            <div class="timeline">
+              <div class="step">
+                <span class="tag">現状</span>
+                <p>指導も現役で行いながら教室を運営。</p>
+              </div>
+              <div class="step">
+                <span class="tag">課題</span>
+                <p>問い合わせ対応、日程調整、月謝、連絡文、教材、発表会…<span class="hl-strong">細かな手作業が多い。</span></p>
+              </div>
+              <div class="step">
+                <span class="tag">目標</span>
+                <p>指導に依存しすぎない仕組みを作り、将来的には<span class="hl">オーナー業</span>へ移行。</p>
+              </div>
+            </div>
+          </section>
+
+          <section class="panel cols-6" aria-label="3. オンライン塾（提供価値）" data-step="3">
+            <h2><span class="dot" aria-hidden="true"></span>3. オンライン塾｜提供価値</h2>
+            <ul class="list">
+              <li class="item">
+                <strong>教える内容</strong>
+                <span>Canva・動画編集</span>
+              </li>
+              <li class="item">
+                <strong>大事にしていること</strong>
+                <span>操作の説明だけでなく、何を誰に伝えたいかを整理して<span class="hl-shape">最短で形にする</span>。</span>
+              </li>
+              <li class="item">
+                <strong>AIとの相性</strong>
+                <span>構成案・文章のたたき台・デザイン方向性の整理で、制作の土台を一気に進められる。</span>
+              </li>
+            </ul>
+          </section>
+
+          <section class="panel cols-12" aria-label="4. YouTube（ストーリー）" data-step="4">
+            <h2><span class="dot" aria-hidden="true"></span>4. YouTube｜挑戦と立て直し</h2>
+            <div class="timeline">
+              <div class="step">
+                <span class="tag">実績</span>
+                <p>開始から3ヶ月で収益化を達成。</p>
+              </div>
+              <div class="step">
+                <span class="tag">出来事</span>
+                <p>先週、突然の「収益化停止勧告」。</p>
+              </div>
+              <div class="step">
+                <span class="tag">いま</span>
+                <p>原因を整理し、表現・チェック体制・制作フローを見直して<span class="hl">再成長中</span>。</p>
+              </div>
+            </div>
+          </section>
+
+          <section class="panel mission cols-7" aria-label="5. ミッション" data-step="5">
+            <h2><span class="dot" aria-hidden="true"></span>5. ミッション｜AIで手作業から脱却</h2>
+            <p>
+              AIを活用して<span class="hl">「手作業からの脱却」</span>と<span class="hl">業務効率化</span>を達成する。<br />
+              繰り返し作業を減らして、レッスン・指導・企画など<span class="hl">価値が生まれる時間</span>に集中したい。
+            </p>
+          </section>
+
+          <section class="panel cols-5" aria-label="6. パーソナル" data-step="6">
+            <h2><span class="dot" aria-hidden="true"></span>6. パーソナル</h2>
+            <ul class="list">
+              <li class="item">
+                <strong>性格</strong>
+                <span>明るく前向き。「起きたこと」より「次にどうするか」を大事にするタイプ。</span>
+              </li>
+              <li class="item">
+                <strong>相棒</strong>
+                <span>白いポメラニアンとの生活が日々のリフレッシュ。</span>
+              </li>
+            </ul>
+          </section>
+
+          <section class="panel cols-12" aria-label="7. 締め" data-step="7">
+            <h2><span class="dot" aria-hidden="true"></span>7. 締め｜今日したいこと</h2>
+            <div class="step" style="grid-template-columns: 1fr;">
+              <p>
+                AI×業務効率化×仕組み作りについて情報交換できたら嬉しいです。<br />
+                教育・制作・運用の現場で「ここが手作業で詰まりやすい」というポイントがあれば、ぜひ教えてください。よろしくお願いします。
+              </p>
+            </div>
+          </section>
+        </section>
+      </main>
+    </div>
+    <script>
+      (function () {
+        var d = new Date();
+        var y = document.getElementById("today-year");
+        var m = document.getElementById("today-month");
+        var day = document.getElementById("today-day");
+        if (y) y.textContent = d.getFullYear() + "年";
+        if (m) m.textContent = (d.getMonth() + 1) + "月";
+        if (day) day.textContent = d.getDate() + "日";
+      })();
+      (function () {
+        const panels = Array.from(document.querySelectorAll(".panel[data-step]"));
+        const nodes = Array.from(document.querySelectorAll(".stepNode[data-step-target]"));
+
+        if (!panels.length || !nodes.length) return;
+
+        function setActive(step, options) {
+          const { scroll = false } = options || {};
+          panels.forEach((panel) => {
+            panel.classList.toggle("is-active", panel.dataset.step === String(step));
+          });
+          nodes.forEach((node) => {
+            node.classList.toggle("is-active", node.dataset.stepTarget === String(step));
+          });
+
+          if (scroll) {
+            const target = panels.find((p) => p.dataset.step === String(step));
+            if (target) {
+              const rect = target.getBoundingClientRect();
+              const offset = window.scrollY + rect.top - 90;
+              window.scrollTo({ top: offset, behavior: "smooth" });
+            }
+          }
+        }
+
+        nodes.forEach((node) => {
+          node.addEventListener("click", () => {
+            const step = node.dataset.stepTarget;
+            if (!step) return;
+            setActive(step, { scroll: true });
+          });
+        });
+
+        // 初期状態: 1. 全体像 をハイライト
+        setActive(1);
+      })();
+    </script>
+  </body>
+</html>
