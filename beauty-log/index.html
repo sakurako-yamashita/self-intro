@@ -1,0 +1,932 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Beauty Journal｜スキンケア・生活記録</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Noto+Serif+JP:wght@400;500;600&display=swap" rel="stylesheet" />
+    <style>
+      :root {
+        --bg: #ffc0cb;
+        --bg-soft: #fff5f7;
+        --card: #fff;
+        --ink: #1a1a1a;
+        --muted: #5c5c5c;
+        --accent: #a65c6d;
+        --accent-strong: #8b4a58;
+        --border: rgba(166, 92, 109, 0.18);
+        --good: #5a8a5a;
+        --bad: #a85858;
+        --font-display: "Cormorant Garamond", "Noto Serif JP", serif;
+        --font-body: "Noto Serif JP", "Cormorant Garamond", serif;
+      }
+      * { box-sizing: border-box; }
+      html, body {
+        margin: 0;
+        min-height: 100%;
+        font-family: var(--font-body);
+        font-weight: 400;
+        background: var(--bg);
+        background-image:
+          linear-gradient(165deg, rgba(255,255,255,0.35) 0%, transparent 40%),
+          linear-gradient(15deg, transparent 50%, rgba(255,255,255,0.25) 100%),
+          radial-gradient(ellipse 120% 80% at 30% 20%, rgba(255,255,255,0.5) 0%, transparent 50%),
+          radial-gradient(ellipse 100% 60% at 70% 80%, rgba(255,255,255,0.35) 0%, transparent 45%);
+        color: var(--ink);
+        letter-spacing: 0.02em;
+      }
+      .app {
+        max-width: 540px;
+        margin: 0 auto;
+        padding: 24px 20px;
+        padding-bottom: 40px;
+      }
+      h1 {
+        font-family: var(--font-display);
+        font-size: 1.75rem;
+        font-weight: 500;
+        font-style: italic;
+        color: var(--ink);
+        margin: 0 0 28px 0;
+        text-align: center;
+        letter-spacing: 0.08em;
+      }
+      .nav {
+        display: flex;
+        gap: 0;
+        margin-bottom: 24px;
+        background: var(--card);
+        border-radius: 14px;
+        padding: 5px;
+        box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+        border: 1px solid var(--border);
+      }
+      .nav button {
+        flex: 1;
+        padding: 12px 10px;
+        border: none;
+        background: transparent;
+        font-family: var(--font-body);
+        font-size: 0.9rem;
+        font-weight: 500;
+        color: var(--muted);
+        border-radius: 10px;
+        cursor: pointer;
+        letter-spacing: 0.03em;
+      }
+      .nav button.active {
+        background: var(--accent);
+        color: #fff;
+      }
+      .nav button:hover:not(.active) {
+        background: var(--bg-soft);
+        color: var(--ink);
+      }
+      .panel {
+        display: none;
+        background: var(--card);
+        border-radius: 18px;
+        padding: 24px 22px;
+        border: 1px solid var(--border);
+        box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+      }
+      .panel.active { display: block; }
+
+      .field { margin-bottom: 18px; }
+      .field label {
+        display: block;
+        font-family: var(--font-body);
+        font-size: 0.8rem;
+        font-weight: 500;
+        color: var(--ink);
+        margin-bottom: 8px;
+        letter-spacing: 0.04em;
+      }
+      .field input[type="date"],
+      .field input[type="text"],
+      .field select,
+      .field textarea {
+        width: 100%;
+        padding: 11px 14px;
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        font-family: var(--font-body);
+        font-size: 0.95rem;
+        color: var(--ink);
+      }
+      .field textarea {
+        min-height: 80px;
+        resize: vertical;
+      }
+      .field .hint { font-size: 0.78rem; color: var(--muted); margin-top: 6px; }
+      .field .field-other { margin-top: 6px; }
+      .skin-score {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+      }
+      .skin-score label {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        padding: 9px 14px;
+        background: var(--bg-soft);
+        border-radius: 10px;
+        cursor: pointer;
+        border: 1px solid transparent;
+        font-family: var(--font-body);
+      }
+      .skin-score input { display: none; }
+      .skin-score input:checked + label { border-color: var(--accent); background: rgba(166, 92, 109, 0.1); }
+      .btn {
+        display: block;
+        width: 100%;
+        padding: 14px 16px;
+        margin-top: 24px;
+        border: none;
+        border-radius: 12px;
+        background: var(--accent);
+        color: #fff;
+        font-family: var(--font-body);
+        font-size: 0.95rem;
+        font-weight: 500;
+        cursor: pointer;
+        letter-spacing: 0.04em;
+      }
+      .btn:hover { background: var(--accent-strong); }
+
+      .log-list { margin-top: 14px; }
+      .log-item {
+        padding: 16px 18px;
+        margin-bottom: 12px;
+        background: var(--bg-soft);
+        border-radius: 12px;
+        border: 1px solid var(--border);
+        font-size: 0.9rem;
+      }
+      .log-item .date { font-weight: 600; color: var(--ink); margin-bottom: 6px; font-family: var(--font-body); }
+      .log-item .skin-badge {
+        display: inline-block;
+        padding: 3px 10px;
+        border-radius: 6px;
+        font-size: 0.78rem;
+        margin-left: 8px;
+        font-weight: 500;
+      }
+      .log-item .skin-badge.good { background: #e8f0e8; color: var(--good); }
+      .log-item .skin-badge.normal { background: #f5f0e6; color: #9a7b4f; }
+      .log-item .skin-badge.bad { background: #f8ebeb; color: var(--bad); }
+      .log-item .summary { color: var(--muted); font-size: 0.85rem; margin-top: 8px; }
+      .empty-msg { text-align: center; color: var(--muted); padding: 28px 16px; font-size: 0.9rem; }
+
+      .stats-section { margin-bottom: 26px; }
+      .stats-section h3 {
+        font-family: var(--font-display);
+        font-size: 1rem;
+        font-weight: 500;
+        font-style: italic;
+        color: var(--ink);
+        margin: 0 0 14px 0;
+        letter-spacing: 0.04em;
+      }
+      .stats-list { list-style: none; padding: 0; margin: 0; }
+      .stats-list li {
+        padding: 10px 14px;
+        margin-bottom: 8px;
+        background: var(--bg-soft);
+        border-radius: 10px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-family: var(--font-body);
+      }
+      .stats-list .count { font-weight: 600; color: var(--accent); }
+      .analysis-note { font-size: 0.85rem; color: var(--muted); margin-top: 14px; padding: 14px; background: var(--bg-soft); border-radius: 10px; }
+      .period-tabs {
+        display: flex;
+        gap: 8px;
+        margin-bottom: 18px;
+        flex-wrap: wrap;
+      }
+      .period-tabs button {
+        padding: 9px 16px;
+        border: 1px solid var(--border);
+        background: var(--card);
+        border-radius: 10px;
+        font-family: var(--font-body);
+        font-size: 0.85rem;
+        font-weight: 500;
+        color: var(--muted);
+        cursor: pointer;
+      }
+      .period-tabs button.active {
+        background: var(--accent);
+        color: #fff;
+        border-color: var(--accent);
+      }
+      .period-tabs button:hover:not(.active) { background: var(--bg-soft); color: var(--ink); }
+      .analysis-comment {
+        padding: 18px 20px;
+        margin-bottom: 18px;
+        background: linear-gradient(145deg, rgba(255,255,255,0.98) 0%, var(--bg-soft) 100%);
+        border-radius: 14px;
+        border: 1px solid var(--border);
+        font-size: 0.9rem;
+        line-height: 1.75;
+        color: var(--ink);
+        font-family: var(--font-body);
+      }
+      .analysis-comment strong { color: var(--accent-strong); font-weight: 600; }
+      .dropdown-row { display: flex; gap: 8px; align-items: center; margin-bottom: 8px; }
+      .dropdown-row select { flex: 1; font-family: var(--font-body); }
+      .btn-add {
+        padding: 9px 16px;
+        border: none;
+        border-radius: 10px;
+        background: var(--accent);
+        color: #fff;
+        font-family: var(--font-body);
+        font-size: 0.85rem;
+        font-weight: 500;
+        cursor: pointer;
+        letter-spacing: 0.02em;
+      }
+      .btn-add:hover { background: var(--accent-strong); }
+      .btn-add:disabled { opacity: 0.5; cursor: not-allowed; }
+      .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 10px; min-height: 28px; }
+      .chip {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 5px 12px;
+        background: var(--bg-soft);
+        border: 1px solid var(--border);
+        border-radius: 20px;
+        font-size: 0.85rem;
+        font-family: var(--font-body);
+      }
+      .chip button { padding: 0; margin: 0; border: none; background: none; color: var(--muted); cursor: pointer; font-size: 1.05rem; line-height: 1; }
+      .chip button:hover { color: var(--accent-strong); }
+      .item-register { margin-bottom: 28px; }
+      .item-register h3 {
+        font-family: var(--font-display);
+        font-size: 1rem;
+        font-weight: 500;
+        font-style: italic;
+        color: var(--ink);
+        margin: 0 0 12px 0;
+        letter-spacing: 0.03em;
+      }
+      .item-register .add-row { display: flex; gap: 10px; margin-bottom: 12px; }
+      .item-register .add-row input { flex: 1; font-family: var(--font-body); }
+      .item-list { list-style: none; padding: 0; margin: 0; }
+      .item-list li {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 14px;
+        margin-bottom: 8px;
+        background: var(--bg-soft);
+        border-radius: 10px;
+        font-size: 0.9rem;
+        font-family: var(--font-body);
+        border: 1px solid var(--border);
+      }
+      .item-list li button {
+        padding: 5px 12px;
+        border: none;
+        border-radius: 6px;
+        background: rgba(0,0,0,0.06);
+        font-size: 0.8rem;
+        font-family: var(--font-body);
+        cursor: pointer;
+        color: var(--muted);
+      }
+      .item-list li button:hover { background: rgba(166, 92, 109, 0.15); color: var(--accent-strong); }
+      .photo-upload {
+        border: 2px dashed var(--border);
+        border-radius: 12px;
+        padding: 20px;
+        text-align: center;
+        background: var(--bg-soft);
+        margin-bottom: 8px;
+      }
+      .photo-upload input[type="file"] { display: none; }
+      .photo-upload .upload-btn {
+        display: inline-block;
+        padding: 10px 20px;
+        border-radius: 10px;
+        background: var(--card);
+        border: 1px solid var(--border);
+        font-family: var(--font-body);
+        font-size: 0.9rem;
+        color: var(--muted);
+        cursor: pointer;
+      }
+      .photo-upload .upload-btn:hover { border-color: var(--accent); color: var(--accent); }
+      .photo-preview-wrap { margin-top: 12px; position: relative; display: inline-block; }
+      .photo-preview-wrap img {
+        max-width: 100%;
+        max-height: 200px;
+        border-radius: 10px;
+        border: 1px solid var(--border);
+      }
+      .photo-preview-wrap .photo-remove {
+        position: absolute;
+        top: 8px;
+        right: 8px;
+        width: 28px;
+        height: 28px;
+        border: none;
+        border-radius: 50%;
+        background: rgba(0,0,0,0.5);
+        color: #fff;
+        font-size: 1.1rem;
+        line-height: 1;
+        cursor: pointer;
+      }
+      .log-item .log-photo {
+        width: 56px;
+        height: 56px;
+        object-fit: cover;
+        border-radius: 8px;
+        margin-top: 8px;
+        border: 1px solid var(--border);
+      }
+      .data-sync {
+        margin-top: 24px;
+        padding-top: 20px;
+        border-top: 1px solid var(--border);
+      }
+      .data-sync h3 {
+        font-family: var(--font-display);
+        font-size: 0.95rem;
+        font-weight: 500;
+        font-style: italic;
+        color: var(--ink);
+        margin: 0 0 12px 0;
+      }
+      .data-sync .sync-btns { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+      .data-sync .btn-outline {
+        padding: 10px 18px;
+        border-radius: 10px;
+        border: 1px solid var(--border);
+        background: var(--card);
+        font-family: var(--font-body);
+        font-size: 0.9rem;
+        color: var(--ink);
+        cursor: pointer;
+      }
+      .data-sync .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+      .data-sync .import-wrap { display: flex; align-items: center; gap: 8px; }
+      .data-sync input[type="file"] { font-size: 0.85rem; }
+      .data-sync .hint { font-size: 0.8rem; color: var(--muted); margin-top: 10px; line-height: 1.5; }
+    </style>
+  </head>
+  <body>
+    <div class="app">
+      <h1>Beauty Journal</h1>
+      <nav class="nav" role="tablist">
+        <button type="button" class="nav-btn active" data-panel="record" role="tab">記録</button>
+        <button type="button" class="nav-btn" data-panel="items" role="tab">アイテム</button>
+        <button type="button" class="nav-btn" data-panel="history" role="tab">履歴</button>
+        <button type="button" class="nav-btn" data-panel="stats" role="tab">集計</button>
+      </nav>
+
+      <section id="panel-record" class="panel active" role="tabpanel">
+        <form id="form-log">
+          <div class="field">
+            <label for="log-date">日付</label>
+            <input type="date" id="log-date" required />
+          </div>
+          <div class="field">
+            <label>朝のスキンケア（使ったもの）</label>
+            <div class="dropdown-row">
+              <select id="morning-select"><option value="">登録済みから選ぶ</option></select>
+              <button type="button" class="btn-add" id="morning-add">追加</button>
+            </div>
+            <div id="morning-chips" class="chips"></div>
+            <input type="text" id="morning-other" placeholder="その他（自由入力）" class="field-other" />
+          </div>
+          <div class="field">
+            <label>夜のスキンケア（使ったもの）</label>
+            <div class="dropdown-row">
+              <select id="evening-select"><option value="">登録済みから選ぶ</option></select>
+              <button type="button" class="btn-add" id="evening-add">追加</button>
+            </div>
+            <div id="evening-chips" class="chips"></div>
+            <input type="text" id="evening-other" placeholder="その他（自由入力）" class="field-other" />
+          </div>
+          <div class="field">
+            <label for="meals">食事（何を食べたか）</label>
+            <textarea id="meals" placeholder="例：朝：パン 昼：弁当 夜：和食"></textarea>
+          </div>
+          <div class="field">
+            <label for="stool">便の状態</label>
+            <select id="stool">
+              <option value="">選んでください</option>
+              <option value="good">良い</option>
+              <option value="normal">普通</option>
+              <option value="bad">悪い</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>使った化粧品（メイク）</label>
+            <div class="dropdown-row">
+              <select id="cosmetics-select"><option value="">登録済みから選ぶ</option></select>
+              <button type="button" class="btn-add" id="cosmetics-add">追加</button>
+            </div>
+            <div id="cosmetics-chips" class="chips"></div>
+            <input type="text" id="cosmetics-other" placeholder="その他（自由入力）" class="field-other" />
+          </div>
+          <div class="field">
+            <label>その日の肌状態（1〜5）</label>
+            <div class="skin-score" id="skin-score">
+              <input type="radio" name="skin" id="skin1" value="1" />
+              <label for="skin1">1</label>
+              <input type="radio" name="skin" id="skin2" value="2" />
+              <label for="skin2">2</label>
+              <input type="radio" name="skin" id="skin3" value="3" />
+              <label for="skin3">3</label>
+              <input type="radio" name="skin" id="skin4" value="4" />
+              <label for="skin4">4</label>
+              <input type="radio" name="skin" id="skin5" value="5" />
+              <label for="skin5">5</label>
+            </div>
+            <p class="hint">5が一番良い状態です</p>
+          </div>
+          <div class="field">
+            <label>写真（任意）</label>
+            <div class="photo-upload">
+              <input type="file" id="photo-input" accept="image/*" />
+              <label for="photo-input" class="upload-btn">写真を選ぶ</label>
+              <div id="photo-preview" class="photo-preview-wrap" style="display:none;"></div>
+            </div>
+          </div>
+          <div class="field">
+            <label for="notes">メモ（任意）</label>
+            <textarea id="notes" placeholder="気になったことなど"></textarea>
+          </div>
+          <button type="submit" class="btn">保存する</button>
+        </form>
+      </section>
+
+      <section id="panel-items" class="panel" role="tabpanel">
+        <div class="item-register">
+          <h3>スキンケア（朝・夜で使うもの）</h3>
+          <div class="add-row">
+            <input type="text" id="item-skincare-input" placeholder="例：化粧水〇〇、美容液△△" />
+            <button type="button" class="btn-add" id="item-skincare-add">追加</button>
+          </div>
+          <ul id="item-skincare-list" class="item-list"></ul>
+        </div>
+        <div class="item-register">
+          <h3>化粧品（メイクで使うもの）</h3>
+          <div class="add-row">
+            <input type="text" id="item-cosmetics-input" placeholder="例：ファンデ〇〇、リップ△△" />
+            <button type="button" class="btn-add" id="item-cosmetics-add">追加</button>
+          </div>
+          <ul id="item-cosmetics-list" class="item-list"></ul>
+        </div>
+        <p class="analysis-note">ここで登録したアイテムは、記録タブの「登録済みから選ぶ」プルダウンに表示されます。</p>
+      </section>
+
+      <section id="panel-history" class="panel" role="tabpanel">
+        <div id="history-list" class="log-list"></div>
+        <p id="history-empty" class="empty-msg" style="display:none;">まだ記録がありません。記録タブから1件追加してみてください。</p>
+        <div class="data-sync">
+          <h3>データのバックアップ・同期</h3>
+          <div class="sync-btns">
+            <button type="button" id="export-btn" class="btn-outline">エクスポート（保存）</button>
+            <div class="import-wrap">
+              <input type="file" id="import-file" accept=".json,application/json" />
+              <button type="button" id="import-btn" class="btn-outline">インポート（読み込み）</button>
+            </div>
+          </div>
+          <p class="hint">スマホでもこのページのURLを開けば使えます。データは端末ごとに保存されます。PCとスマホで同じデータにしたい場合は、片方で「エクスポート」してファイルを保存し、もう片方で「インポート」でそのファイルを選んでください。</p>
+        </div>
+      </section>
+
+      <section id="panel-stats" class="panel" role="tabpanel">
+        <div class="period-tabs" id="period-tabs">
+          <button type="button" class="period-btn active" data-days="7">1週間</button>
+          <button type="button" class="period-btn" data-days="14">2週間</button>
+          <button type="button" class="period-btn" data-days="30">1か月</button>
+          <button type="button" class="period-btn" data-days="">全期間</button>
+        </div>
+        <div id="stats-content"></div>
+        <p id="stats-empty" class="empty-msg" style="display:none;">記録が少ないと集計できません。まずは数日分記録してみてください。</p>
+      </section>
+    </div>
+    <script>
+      const STORAGE_KEY = 'beauty-log-entries';
+      const STORAGE_KEY_ITEMS = 'beauty-log-items';
+      function getEntries() {
+        try {
+          const raw = localStorage.getItem(STORAGE_KEY);
+          return raw ? JSON.parse(raw) : [];
+        } catch (e) { return []; }
+      }
+      function saveEntries(entries) {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(entries));
+      }
+      function getItems() {
+        try {
+          const raw = localStorage.getItem(STORAGE_KEY_ITEMS);
+          const o = raw ? JSON.parse(raw) : {};
+          return { skincare: o.skincare || [], cosmetics: o.cosmetics || [] };
+        } catch (e) { return { skincare: [], cosmetics: [] }; }
+      }
+      function saveItems(obj) {
+        localStorage.setItem(STORAGE_KEY_ITEMS, JSON.stringify(obj));
+      }
+      var selectedMorning = [], selectedEvening = [], selectedCosmetics = [];
+      var currentPhotoData = null;
+      var MAX_PHOTO_WIDTH = 800;
+      var PHOTO_QUALITY = 0.78;
+      function resizeImageToDataUrl(file, maxW, quality, callback) {
+        var img = new Image();
+        var url = URL.createObjectURL(file);
+        img.onload = function() {
+          URL.revokeObjectURL(url);
+          var w = img.width, h = img.height;
+          if (w > maxW) { h = (h * maxW) / w; w = maxW; }
+          var canvas = document.createElement('canvas');
+          canvas.width = w;
+          canvas.height = h;
+          var ctx = canvas.getContext('2d');
+          ctx.drawImage(img, 0, 0, w, h);
+          try {
+            callback(canvas.toDataURL('image/jpeg', quality));
+          } catch (e) {
+            callback(null);
+          }
+        };
+        img.onerror = function() { URL.revokeObjectURL(url); callback(null); };
+        img.src = url;
+      }
+      function showPhotoPreview(dataUrl) {
+        var wrap = document.getElementById('photo-preview');
+        wrap.innerHTML = '<img src="' + dataUrl + '" alt="プレビュー" /><button type="button" class="photo-remove" aria-label="削除">×</button>';
+        wrap.style.display = 'block';
+        wrap.querySelector('.photo-remove').addEventListener('click', function() {
+          currentPhotoData = null;
+          wrap.innerHTML = '';
+          wrap.style.display = 'none';
+          document.getElementById('photo-input').value = '';
+        });
+      }
+      document.getElementById('photo-input').addEventListener('change', function() {
+        var file = this.files && this.files[0];
+        if (!file || !file.type.match(/^image\//)) return;
+        resizeImageToDataUrl(file, MAX_PHOTO_WIDTH, PHOTO_QUALITY, function(dataUrl) {
+          if (dataUrl) {
+            currentPhotoData = dataUrl;
+            showPhotoPreview(dataUrl);
+          }
+        });
+      });
+      function refreshItemOptions() {
+        var items = getItems();
+        function fill(selId, list) {
+          var sel = document.getElementById(selId);
+          if (!sel) return;
+          var first = sel.options[0];
+          sel.innerHTML = '';
+          if (first) sel.appendChild(first);
+          list.forEach(function(name) {
+            var opt = document.createElement('option');
+            opt.value = name;
+            opt.textContent = name;
+            sel.appendChild(opt);
+          });
+        }
+        fill('morning-select', items.skincare);
+        fill('evening-select', items.skincare);
+        fill('cosmetics-select', items.cosmetics);
+      }
+      function renderChips(containerId, arr, fieldKey) {
+        var container = document.getElementById(containerId);
+        container.innerHTML = '';
+        arr.forEach(function(name, i) {
+          var chip = document.createElement('span');
+          chip.className = 'chip';
+          chip.innerHTML = name + ' <button type="button" data-i="' + i + '" aria-label="削除">×</button>';
+          chip.querySelector('button').addEventListener('click', function() {
+            arr.splice(parseInt(this.dataset.i, 10), 1);
+            renderChips(containerId, arr, fieldKey);
+          });
+          container.appendChild(chip);
+        });
+      }
+      function renderItemLists() {
+        var items = getItems();
+        function render(listId, arr, inputId, addBtnId) {
+          var ul = document.getElementById(listId);
+          ul.innerHTML = '';
+          arr.forEach(function(name, i) {
+            var li = document.createElement('li');
+            li.innerHTML = '<span>' + name + '</span><button type="button" data-i="' + i + '">削除</button>';
+            li.querySelector('button').addEventListener('click', function() {
+              arr.splice(parseInt(this.dataset.i, 10), 1);
+              saveItems(items);
+              renderItemLists();
+              refreshItemOptions();
+            });
+            ul.appendChild(li);
+          });
+          document.getElementById(addBtnId).onclick = function() {
+            var input = document.getElementById(inputId);
+            var v = input.value.trim();
+            if (!v) return;
+            if (arr.indexOf(v) >= 0) { input.value = ''; return; }
+            arr.push(v);
+            arr.sort();
+            saveItems(items);
+            renderItemLists();
+            refreshItemOptions();
+            input.value = '';
+          };
+        }
+        render('item-skincare-list', items.skincare, 'item-skincare-input', 'item-skincare-add');
+        render('item-cosmetics-list', items.cosmetics, 'item-cosmetics-input', 'item-cosmetics-add');
+        document.getElementById('item-skincare-input').onkeydown = function(e) { if (e.key === 'Enter') { e.preventDefault(); document.getElementById('item-skincare-add').click(); } };
+        document.getElementById('item-cosmetics-input').onkeydown = function(e) { if (e.key === 'Enter') { e.preventDefault(); document.getElementById('item-cosmetics-add').click(); } };
+      }
+
+      document.querySelectorAll('.nav-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const panelId = btn.dataset.panel;
+          document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+          document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+          btn.classList.add('active');
+          document.getElementById('panel-' + panelId).classList.add('active');
+          if (panelId === 'history') renderHistory();
+          if (panelId === 'stats') renderStats();
+          if (panelId === 'record') refreshItemOptions();
+          if (panelId === 'items') renderItemLists();
+        });
+      });
+
+      document.getElementById('period-tabs').addEventListener('click', (e) => {
+        const btn = e.target.closest('.period-btn');
+        if (!btn) return;
+        document.querySelectorAll('.period-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        renderStats();
+      });
+
+      function collectField(chips, otherId) {
+        var parts = chips.slice();
+        var other = document.getElementById(otherId).value.trim();
+        if (other) parts.push(other);
+        return parts.filter(Boolean).join('、');
+      }
+      function clearChips() {
+        selectedMorning = [];
+        selectedEvening = [];
+        selectedCosmetics = [];
+        renderChips('morning-chips', selectedMorning);
+        renderChips('evening-chips', selectedEvening);
+        renderChips('cosmetics-chips', selectedCosmetics);
+        document.getElementById('morning-other').value = '';
+        document.getElementById('evening-other').value = '';
+        document.getElementById('cosmetics-other').value = '';
+        currentPhotoData = null;
+        var wrap = document.getElementById('photo-preview');
+        wrap.innerHTML = '';
+        wrap.style.display = 'none';
+        document.getElementById('photo-input').value = '';
+      }
+      document.getElementById('morning-add').addEventListener('click', function() {
+        var v = document.getElementById('morning-select').value;
+        if (!v) return;
+        if (selectedMorning.indexOf(v) >= 0) return;
+        selectedMorning.push(v);
+        renderChips('morning-chips', selectedMorning);
+      });
+      document.getElementById('evening-add').addEventListener('click', function() {
+        var v = document.getElementById('evening-select').value;
+        if (!v) return;
+        if (selectedEvening.indexOf(v) >= 0) return;
+        selectedEvening.push(v);
+        renderChips('evening-chips', selectedEvening);
+      });
+      document.getElementById('cosmetics-add').addEventListener('click', function() {
+        var v = document.getElementById('cosmetics-select').value;
+        if (!v) return;
+        if (selectedCosmetics.indexOf(v) >= 0) return;
+        selectedCosmetics.push(v);
+        renderChips('cosmetics-chips', selectedCosmetics);
+      });
+      document.getElementById('form-log').addEventListener('submit', function(e) {
+        e.preventDefault();
+        var date = document.getElementById('log-date').value;
+        var skinEl = document.querySelector('input[name="skin"]:checked');
+        var entry = {
+          date: date,
+          morning: collectField(selectedMorning, 'morning-other'),
+          evening: collectField(selectedEvening, 'evening-other'),
+          meals: document.getElementById('meals').value.trim(),
+          stool: document.getElementById('stool').value,
+          cosmetics: collectField(selectedCosmetics, 'cosmetics-other'),
+          skin: skinEl ? parseInt(skinEl.value, 10) : null,
+          photo: currentPhotoData || null,
+          notes: document.getElementById('notes').value.trim()
+        };
+        var entries = getEntries();
+        var existing = entries.findIndex(function(e) { return e.date === date; });
+        if (existing >= 0) entries[existing] = entry;
+        else entries.push(entry);
+        entries.sort(function(a, b) { return b.date.localeCompare(a.date); });
+        saveEntries(entries);
+        document.getElementById('form-log').reset();
+        document.getElementById('log-date').value = new Date().toISOString().slice(0, 10);
+        clearChips();
+        renderHistory();
+        alert('保存しました');
+      });
+
+      document.getElementById('export-btn').addEventListener('click', function() {
+        var data = { entries: getEntries(), items: getItems(), exportedAt: new Date().toISOString() };
+        var blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+        var a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = 'beauty-journal-backup-' + new Date().toISOString().slice(0, 10) + '.json';
+        a.click();
+        URL.revokeObjectURL(a.href);
+      });
+      document.getElementById('import-btn').addEventListener('click', function() {
+        var input = document.getElementById('import-file');
+        if (!input.files || !input.files[0]) { alert('ファイルを選んでください'); return; }
+        var fr = new FileReader();
+        fr.onload = function() {
+          try {
+            var data = JSON.parse(fr.result);
+            if (!data.entries && !data.items) { alert('形式が正しくありません'); return; }
+            if (data.entries) { saveEntries(data.entries); }
+            if (data.items) { saveItems(data.items); }
+            refreshItemOptions();
+            renderItemLists();
+            renderHistory();
+            if (document.getElementById('panel-stats').classList.contains('active')) renderStats();
+            input.value = '';
+            alert('読み込みました');
+          } catch (e) { alert('ファイルの読み込みに失敗しました'); }
+        };
+        fr.readAsText(input.files[0]);
+      });
+
+      function formatDate(str) {
+        const d = new Date(str + 'T12:00:00');
+        return d.getFullYear() + '/' + (d.getMonth() + 1) + '/' + d.getDate();
+      }
+      function skinLabel(n) {
+        if (n == null) return '-';
+        if (n >= 4) return '良い';
+        if (n >= 3) return '普通';
+        return '悪い';
+      }
+      function skinClass(n) {
+        if (n == null) return '';
+        if (n >= 4) return 'good';
+        if (n >= 3) return 'normal';
+        return 'bad';
+      }
+
+      function renderHistory() {
+        const entries = getEntries();
+        const list = document.getElementById('history-list');
+        const empty = document.getElementById('history-empty');
+        list.innerHTML = '';
+        if (entries.length === 0) {
+          empty.style.display = 'block';
+          return;
+        }
+        empty.style.display = 'none';
+        entries.forEach(entry => {
+          const summary = [entry.morning && '朝ケア', entry.evening && '夜ケア', entry.meals && '食事', entry.stool && '便', entry.cosmetics && 'メイク'].filter(Boolean).join('・') || '（未記入）';
+          const div = document.createElement('div');
+          div.className = 'log-item';
+          var photoHtml = entry.photo ? '<img src="' + entry.photo + '" alt="" class="log-photo" />' : '';
+          div.innerHTML = '<span class="date">' + formatDate(entry.date) + '</span>' +
+            (entry.skin != null ? '<span class="skin-badge ' + skinClass(entry.skin) + '">肌' + entry.skin + '（' + skinLabel(entry.skin) + '）</span>' : '') +
+            '<p class="summary">' + summary + '</p>' + photoHtml;
+          list.appendChild(div);
+        });
+      }
+
+      function getStatsPeriodDays() {
+        const btn = document.querySelector('.period-btn.active');
+        return btn && btn.dataset.days !== '' ? parseInt(btn.dataset.days, 10) : null;
+      }
+      function filterEntriesByPeriod(entries, days) {
+        if (!days) return entries;
+        const end = new Date();
+        const start = new Date();
+        start.setDate(start.getDate() - days);
+        const startStr = start.toISOString().slice(0, 10);
+        const endStr = end.toISOString().slice(0, 10);
+        return entries.filter(e => e.date >= startStr && e.date <= endStr);
+      }
+      function getPeriodLabel(days) {
+        if (!days) return '全期間';
+        if (days === 7) return '直近1週間';
+        if (days === 14) return '直近2週間';
+        if (days === 30) return '直近1か月';
+        return '直近' + days + '日間';
+      }
+
+      document.getElementById('period-tabs').addEventListener('click', (e) => {
+        const btn = e.target.closest('.period-btn');
+        if (!btn) return;
+        document.querySelectorAll('.period-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        renderStats();
+      });
+
+      function renderStats() {
+        const allEntries = getEntries();
+        const days = getStatsPeriodDays();
+        const entries = filterEntriesByPeriod(allEntries, days);
+        const container = document.getElementById('stats-content');
+        const empty = document.getElementById('stats-empty');
+        container.innerHTML = '';
+        if (entries.length < 1) {
+          empty.style.display = 'block';
+          empty.textContent = days ? 'この期間の記録がありません。' : 'まだ記録がありません。記録タブから追加してみてください。';
+          return;
+        }
+        empty.style.display = 'none';
+
+        const goodDays = entries.filter(e => e.skin != null && e.skin >= 4);
+        const parseItems = (text) => text.split(/[、,　\s\n]+/).map(s => s.trim()).filter(Boolean);
+
+        let html = '';
+
+        if (goodDays.length > 0) {
+          const productCount = {};
+          const foodCount = {};
+          const stoolCount = { good: 0, normal: 0, bad: 0 };
+          goodDays.forEach(e => {
+            parseItems(e.morning + ' ' + e.evening).forEach(p => { productCount[p] = (productCount[p] || 0) + 1; });
+            parseItems(e.meals).forEach(f => { foodCount[f] = (foodCount[f] || 0) + 1; });
+            if (e.stool) stoolCount[e.stool] = (stoolCount[e.stool] || 0) + 1;
+          });
+          const topProducts = Object.entries(productCount).sort((a, b) => b[1] - a[1]).slice(0, 10);
+          const topFood = Object.entries(foodCount).sort((a, b) => b[1] - a[1]).slice(0, 8);
+          const stoolStr = Object.entries(stoolCount).filter(([, n]) => n > 0).map(([k, n]) => (k === 'good' ? '良い' : k === 'normal' ? '普通' : '悪い') + ' ' + n + '回').join('、');
+
+          var comment = 'この期間（' + getPeriodLabel(days) + '）で<strong>肌が良かった日は' + goodDays.length + '日</strong>でした。';
+          if (topProducts.length) comment += ' よく使っていたスキンケア・化粧品は「' + topProducts.slice(0, 3).map(function(p) { return p[0]; }).join('」「') + '」など。';
+          if (topFood.length) comment += ' 食事では「' + topFood.slice(0, 3).map(function(p) { return p[0]; }).join('」「') + '」が多めでした。';
+          if (stoolStr) comment += ' 便の状態は' + stoolStr + '。';
+          comment += ' このあたりを意識すると調子が整いやすいかもしれません。';
+          html += '<div class="analysis-comment">' + comment + '</div>';
+          html += '<div class="stats-section"><h3>肌が良かった日（肌4〜5）の傾向</h3>';
+          if (topProducts.length) {
+            html += '<p style="margin-bottom:6px;">よく使ったスキンケア・化粧品</p><ul class="stats-list">';
+            topProducts.forEach(([name, count]) => { html += '<li><span>' + name + '</span><span class="count">' + count + '回</span></li>'; });
+            html += '</ul>';
+          }
+          if (topFood.length) {
+            html += '<p style="margin:12px 0 6px 0;">よく食べたもの</p><ul class="stats-list">';
+            topFood.forEach(([name, count]) => { html += '<li><span>' + name + '</span><span class="count">' + count + '回</span></li>'; });
+            html += '</ul>';
+          }
+          if (stoolStr) html += '<p style="margin-top:12px;font-size:0.9rem;">便の状態：' + stoolStr + '</p>';
+          html += '</div>';
+        } else {
+          html += '<div class="analysis-comment">この期間（' + getPeriodLabel(days) + '）では肌スコア4以上の日がまだありません。記録を続けると「肌が良かった日」の傾向が分析できるようになります。</div>';
+        }
+
+        const allProductCount = {};
+        entries.forEach(e => {
+          parseItems(e.morning + ' ' + e.evening + ' ' + e.cosmetics).forEach(p => { allProductCount[p] = (allProductCount[p] || 0) + 1; });
+        });
+        const topAll = Object.entries(allProductCount).sort((a, b) => b[1] - a[1]).slice(0, 12);
+        if (topAll.length) {
+          html += '<div class="stats-section"><h3>この期間でよく使ったもの</h3><ul class="stats-list">';
+          topAll.forEach(([name, count]) => { html += '<li><span>' + name + '</span><span class="count">' + count + '回</span></li>'; });
+          html += '</ul></div>';
+        }
+
+        const withSkin = entries.filter(e => e.skin != null);
+        const avgSkin = withSkin.length ? withSkin.reduce((a, e) => a + e.skin, 0) / withSkin.length : NaN;
+        if (!isNaN(avgSkin)) {
+          html += '<div class="stats-section"><h3>肌スコアの平均（' + getPeriodLabel(days) + '）</h3><p style="font-size:1.2rem; font-weight:700; color: var(--accent);">' + avgSkin.toFixed(1) + ' <span style="font-size:0.9rem; font-weight:400; color: var(--muted);">/ 5</span></p></div>';
+        }
+
+        html += '<p class="analysis-note">期間を変えると傾向が比較できます。記録が増えるほど分析がはっきりしてきます。</p>';
+        container.innerHTML = html;
+      }
+
+      document.getElementById('log-date').value = new Date().toISOString().slice(0, 10);
+      refreshItemOptions();
+      renderItemLists();
+      renderHistory();
+    </script>
+  </body>
+</html>
