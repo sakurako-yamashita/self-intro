@@ -16,8 +16,6 @@
         --muted: #94a3b8;
         --text: #e2e8f0;
         --border: rgba(148, 163, 184, 0.2);
-        --ok: #34d399;
-        --err: #f87171;
       }
       * { box-sizing: border-box; }
       body {
@@ -64,7 +62,8 @@
       }
       label { display: block; font-size: 0.8rem; color: var(--muted); margin-bottom: 6px; }
       input[type="url"],
-      input[type="text"] {
+      input[type="text"],
+      input[type="password"] {
         width: 100%;
         max-width: 100%;
         padding: 10px 12px;
@@ -89,7 +88,9 @@
       }
       .field { margin-bottom: 16px; }
       .field:last-child { margin-bottom: 0; }
-      .btn-row { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; margin-top: 16px; }
+      .key-row { display: flex; flex-wrap: wrap; gap: 10px; align-items: flex-end; }
+      .key-row .field { flex: 1; min-width: 200px; margin-bottom: 0; }
+      .btn-row { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-top: 16px; }
       button.primary {
         padding: 12px 24px;
         border: none;
@@ -102,9 +103,23 @@
         cursor: pointer;
       }
       button.primary:disabled { opacity: 0.5; cursor: not-allowed; }
-      .status { font-size: 0.85rem; min-height: 1.4em; }
-      .status.error { color: var(--err); }
-      .status.ok { color: var(--ok); }
+      button.secondary {
+        padding: 10px 18px;
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        background: rgba(0,0,0,0.2);
+        color: var(--text);
+        font-family: inherit;
+        font-size: 0.9rem;
+        font-weight: 600;
+        cursor: pointer;
+      }
+      button.secondary:hover { border-color: var(--accent); color: var(--accent); }
+      .save-hint {
+        font-size: 0.78rem;
+        color: var(--muted);
+        margin-top: 8px;
+      }
 
       .compare-wrap { overflow-x: auto; margin-top: 8px; }
       table.compare {
@@ -147,16 +162,6 @@
         border-radius: 8px;
         resize: vertical;
       }
-      .note {
-        margin-top: 16px;
-        padding: 12px 14px;
-        border-radius: 10px;
-        background: rgba(251, 191, 36, 0.08);
-        border: 1px solid rgba(251, 191, 36, 0.25);
-        font-size: 0.8rem;
-        color: #fcd34d;
-        line-height: 1.5;
-      }
       footer {
         text-align: center;
         margin-top: 24px;
@@ -169,31 +174,33 @@
     <div class="wrap">
       <h1>競合動画 比較分析</h1>
       <p class="lead">
-        動画のURL・タイトル・概要欄などを貼り付けて「分析実行」。Gemini が4項目を抽出し、左列に表示します。右列は手入力で自分の構想案と並べて比較できます（ページをリロードせず更新）。
+        Google AI Studio の API キーを保存し、タイトル・概要欄を貼って「分析実行」。Gemini が4項目を JSON で返し、左列に表示します（リロードなし）。
       </p>
+
+      <section class="block">
+        <h2>Gemini API キー</h2>
+        <div class="key-row">
+          <div class="field" style="flex:1;min-width:240px;">
+            <label for="gemini-key">API キー</label>
+            <input type="password" id="gemini-key" autocomplete="off" placeholder="Google AI Studio で発行したキー" />
+          </div>
+          <button type="button" class="secondary" id="btn-save-key">APIキーを保存</button>
+        </div>
+        <p class="save-hint" id="save-hint"></p>
+      </section>
 
       <section class="block">
         <h2>入力</h2>
         <div class="field">
-          <label for="video-url">YouTube URL（任意・分析文脈用）</label>
+          <label for="video-url">YouTube URL（任意）</label>
           <input type="url" id="video-url" placeholder="https://www.youtube.com/watch?v=..." />
         </div>
         <div class="field">
-          <label for="video-text">タイトル・概要欄・メモなど（必須）</label>
-          <textarea id="video-text" placeholder="ここにコピペしてください。情報が多いほど分析精度が上がります。"></textarea>
-        </div>
-        <div class="field">
-          <label for="api-base">API のベースURL（GitHub Pages 等で静的のみのとき）</label>
-          <input type="text" id="api-base" placeholder="空欄＝このサイトと同じオリジン（例: Vercel デプロイ時）" />
+          <label for="video-text">タイトル・概要欄（必須）</label>
+          <textarea id="video-text" placeholder="ここにコピペしてください。"></textarea>
         </div>
         <div class="btn-row">
           <button type="button" class="primary" id="btn-run">分析実行</button>
-          <span class="status" id="status" aria-live="polite"></span>
-        </div>
-        <div class="note">
-          <strong>動かし方：</strong> APIキーはブラウザに置きません。このHTMLと同じプロジェクトを
-          <strong>Vercel</strong> にデプロイし、環境変数 <code>GEMINI_API_KEY</code> を設定してください。
-          GitHub Pages だけの場合は、上の「API のベースURL」に <code>https://あなたのプロジェクト.vercel.app</code> を入れ、末尾スラッシュなしで保存してから分析を実行してください。
         </div>
       </section>
 
@@ -210,114 +217,143 @@
             </thead>
             <tbody>
               <tr>
-                <th scope="row">ターゲット層<br /><span style="font-weight:400;color:var(--muted);font-size:0.78rem;">（年齢・悩み）</span></th>
-                <td class="ai-cell loading" id="ai-target">— 分析実行で表示 —</td>
-                <td><textarea class="mine-cell" id="mine-target" placeholder="自分の案を入力"></textarea></td>
+                <th scope="row">ターゲット層</th>
+                <td class="ai-cell loading" id="ai-target">—</td>
+                <td><textarea class="mine-cell" id="mine-target" placeholder="自分の案"></textarea></td>
               </tr>
               <tr>
-                <th scope="row">テンポ・ナレーション</th>
+                <th scope="row">動画のテンポ</th>
                 <td class="ai-cell loading" id="ai-tempo">—</td>
-                <td><textarea class="mine-cell" id="mine-tempo" placeholder="自分の案を入力"></textarea></td>
+                <td><textarea class="mine-cell" id="mine-tempo" placeholder="自分の案"></textarea></td>
               </tr>
               <tr>
-                <th scope="row">視覚的工夫<br /><span style="font-weight:400;color:var(--muted);font-size:0.78rem;">（テロップ・図解）</span></th>
+                <th scope="row">視覚的工夫</th>
                 <td class="ai-cell loading" id="ai-visual">—</td>
-                <td><textarea class="mine-cell" id="mine-visual" placeholder="自分の案を入力"></textarea></td>
+                <td><textarea class="mine-cell" id="mine-visual" placeholder="自分の案"></textarea></td>
               </tr>
               <tr>
                 <th scope="row">メッセージの本質</th>
                 <td class="ai-cell loading" id="ai-message">—</td>
-                <td><textarea class="mine-cell" id="mine-message" placeholder="自分の案を入力"></textarea></td>
+                <td><textarea class="mine-cell" id="mine-message" placeholder="自分の案"></textarea></td>
               </tr>
             </tbody>
           </table>
         </div>
       </section>
 
-      <footer>competitor-analyzer.html · Gemini API（サーバー経由）</footer>
+      <footer>competitor-analyzer.html · ブラウザから Gemini 直接</footer>
     </div>
-    <script>
-      (function () {
-        var btn = document.getElementById("btn-run");
-        var statusEl = document.getElementById("status");
-        var urlInput = document.getElementById("video-url");
-        var textInput = document.getElementById("video-text");
-        var apiBaseInput = document.getElementById("api-base");
 
-        var cells = {
-          targetAudience: document.getElementById("ai-target"),
-          tempoNarration: document.getElementById("ai-tempo"),
-          visualCraft: document.getElementById("ai-visual"),
-          messageEssence: document.getElementById("ai-message"),
-        };
+    <script type="module">
+      import { GoogleGenerativeAI } from "https://esm.sh/@google/generative-ai@0.21.0";
 
-        function setLoading(loading) {
-          btn.disabled = loading;
-          Object.keys(cells).forEach(function (k) {
-            cells[k].classList.toggle("loading", loading);
-          });
+      const LS_KEY = "competitor_analyzer_gemini_api_key";
+      const MODEL_ID = "gemini-1.5-flash";
+
+      const keyInput = document.getElementById("gemini-key");
+      const saveHint = document.getElementById("save-hint");
+      const urlInput = document.getElementById("video-url");
+      const textInput = document.getElementById("video-text");
+      const btnRun = document.getElementById("btn-run");
+
+      const cells = {
+        targetAudience: document.getElementById("ai-target"),
+        videoTempo: document.getElementById("ai-tempo"),
+        visualCraft: document.getElementById("ai-visual"),
+        messageEssence: document.getElementById("ai-message"),
+      };
+
+      function loadKey() {
+        const v = localStorage.getItem(LS_KEY);
+        if (v) keyInput.value = v;
+      }
+      loadKey();
+
+      document.getElementById("btn-save-key").addEventListener("click", () => {
+        const v = keyInput.value.trim();
+        if (v) {
+          localStorage.setItem(LS_KEY, v);
+          saveHint.textContent = "保存しました。このブラウザに保持されます。";
+        } else {
+          localStorage.removeItem(LS_KEY);
+          saveHint.textContent = "キーを空にして保存したため、保存を解除しました。";
+        }
+        setTimeout(() => { saveHint.textContent = ""; }, 3500);
+      });
+
+      function setLoading(loading) {
+        btnRun.disabled = loading;
+        Object.values(cells).forEach((el) => el.classList.toggle("loading", loading));
+      }
+
+      btnRun.addEventListener("click", async () => {
+        const apiKey = (keyInput.value.trim() || localStorage.getItem(LS_KEY) || "").trim();
+        const text = (textInput.value || "").trim();
+        if (!apiKey) {
+          alert("API キーを入力し、「APIキーを保存」するか、そのまま分析実行してください。");
+          return;
+        }
+        if (!text) {
+          alert("タイトル・概要欄を入力してください。");
+          return;
         }
 
-        function apiUrl() {
-          var base = (apiBaseInput.value || "").trim().replace(/\/$/, "");
-          var path = "/api/gemini-analyze";
-          if (!base) return path;
-          return base + path;
-        }
+        const url = (urlInput.value || "").trim();
+        const userContent = url
+          ? `【参考URL】\n${url}\n\n【タイトル・概要欄など】\n${text}`
+          : `【タイトル・概要欄など】\n${text}`;
 
-        btn.addEventListener("click", function () {
-          var url = (urlInput.value || "").trim();
-          var text = (textInput.value || "").trim();
-          if (!text) {
-            statusEl.textContent = "タイトル・概要欄などの入力が必要です。";
-            statusEl.className = "status error";
-            return;
-          }
-          var payload = text;
-          if (url) payload = "【URL】\n" + url + "\n\n【本文】\n" + text;
+        const instruction = `次の入力は YouTube 動画に関するテキストです。次の4キーだけを持つ JSON オブジェクト1つだけを返してください。説明文やマークダウンは付けないでください。
+{
+  "targetAudience": "ターゲット層（年齢・悩み・属性など）",
+  "videoTempo": "動画のテンポ（早さ・間・ナレーションの特徴など）",
+  "visualCraft": "視覚的工夫（テロップ・図解・画角など）",
+  "messageEssence": "メッセージの本質"
+}
+各値は日本語で、200文字程度以内を目安に。情報不足の場合は「情報不足」と書いてください。`;
 
-          statusEl.textContent = "分析中…";
-          statusEl.className = "status";
-          setLoading(true);
-          Object.keys(cells).forEach(function (k) {
-            cells[k].textContent = "…";
-          });
-
-          fetch(apiUrl(), {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ text: payload }),
-          })
-            .then(function (res) {
-              return res.json().then(function (data) {
-                if (!res.ok) throw new Error(data.error || data.detail || res.statusText);
-                return data;
-              });
-            })
-            .then(function (data) {
-              cells.targetAudience.textContent = data.targetAudience || "情報不足";
-              cells.tempoNarration.textContent = data.tempoNarration || "情報不足";
-              cells.visualCraft.textContent = data.visualCraft || "情報不足";
-              cells.messageEssence.textContent = data.messageEssence || "情報不足";
-              Object.keys(cells).forEach(function (k) {
-                cells[k].classList.remove("loading");
-              });
-              statusEl.textContent = "完了しました。";
-              statusEl.className = "status ok";
-            })
-            .catch(function (e) {
-              statusEl.textContent = e.message || String(e);
-              statusEl.className = "status error";
-              Object.keys(cells).forEach(function (k) {
-                cells[k].textContent = "—";
-                cells[k].classList.add("loading");
-              });
-            })
-            .finally(function () {
-              btn.disabled = false;
-            });
+        setLoading(true);
+        Object.values(cells).forEach((el) => {
+          el.textContent = "…";
         });
-      })();
+
+        try {
+          const genAI = new GoogleGenerativeAI(apiKey);
+          const model = genAI.getGenerativeModel({
+            model: MODEL_ID,
+            generationConfig: {
+              temperature: 0.35,
+              responseMimeType: "application/json",
+            },
+          });
+
+          const fullPrompt = instruction + "\n\n--- 入力 ---\n\n" + userContent;
+          const result = await model.generateContent(fullPrompt);
+
+          const raw = result.response.text();
+          let data;
+          try {
+            data = JSON.parse(raw.trim());
+          } catch {
+            const m = raw.match(/\{[\s\S]*\}/);
+            data = m ? JSON.parse(m[0]) : {};
+          }
+
+          cells.targetAudience.textContent = data.targetAudience || "情報不足";
+          cells.videoTempo.textContent = data.videoTempo || "情報不足";
+          cells.visualCraft.textContent = data.visualCraft || "情報不足";
+          cells.messageEssence.textContent = data.messageEssence || "情報不足";
+        } catch (e) {
+          cells.targetAudience.textContent = "—";
+          cells.videoTempo.textContent = "—";
+          cells.visualCraft.textContent = "—";
+          cells.messageEssence.textContent = "—";
+          alert("分析に失敗しました。APIキーやモデル利用制限を確認してください。");
+        } finally {
+          Object.values(cells).forEach((el) => el.classList.remove("loading"));
+          btnRun.disabled = false;
+        }
+      });
     </script>
   </body>
 </html>
