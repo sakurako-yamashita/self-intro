@@ -1,0 +1,5 @@
+{
+  "rewrites": [
+    { "source": "/competitor-analyzer", "destination": "/competitor-analyzer.html" }
+  ]
+}

@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>図解｜競合動画分析</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;600;700&display=swap" rel="stylesheet" />
+    <style>
+      :root {
+        --bg: #0f1419;
+        --card: #1a2332;
+        --accent: #38bdf8;
+        --accent2: #a78bfa;
+        --warn: #fbbf24;
+        --ok: #34d399;
+        --muted: #94a3b8;
+        --text: #e2e8f0;
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        font-family: "Noto Sans JP", sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        line-height: 1.55;
+        padding: 24px 16px 48px;
+      }
+      .wrap { max-width: 720px; margin: 0 auto; }
+      h1 {
+        font-size: 1.35rem;
+        font-weight: 700;
+        text-align: center;
+        margin: 0 0 28px 0;
+        background: linear-gradient(90deg, var(--accent), var(--accent2));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+      .block {
+        background: var(--card);
+        border-radius: 16px;
+        padding: 20px 20px 18px;
+        margin-bottom: 20px;
+        border: 1px solid rgba(148, 163, 184, 0.15);
+      }
+      .block h2 {
+        font-size: 0.75rem;
+        font-weight: 700;
+        letter-spacing: 0.06em;
+        color: var(--accent);
+        margin: 0 0 12px 0;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .block h2 span {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 26px;
+        height: 26px;
+        border-radius: 8px;
+        background: rgba(56, 189, 248, 0.2);
+        color: var(--accent);
+        font-size: 0.85rem;
+      }
+      .block p { margin: 0; font-size: 0.92rem; color: var(--text); }
+      .meta-title {
+        font-size: 1rem;
+        font-weight: 600;
+        color: var(--text);
+        margin: 0 0 12px 0;
+        line-height: 1.5;
+      }
+      .meta-link {
+        font-size: 0.88rem;
+        word-break: break-all;
+      }
+      .meta-link a {
+        color: #7dd3fc;
+        text-decoration: underline;
+      }
+      .meta-link a:hover { color: #bae6fd; }
+      .bullet-list {
+        margin: 0;
+        padding-left: 1.2em;
+        font-size: 0.92rem;
+        color: var(--text);
+        line-height: 1.65;
+      }
+      .bullet-list li { margin-bottom: 10px; }
+      .bullet-list li:last-child { margin-bottom: 0; }
+      .answer-only {
+        font-size: 0.92rem;
+        color: var(--text);
+        margin: 0;
+        line-height: 1.65;
+      }
+      .tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+      .tag {
+        font-size: 0.82rem;
+        padding: 6px 12px;
+        border-radius: 999px;
+        background: rgba(167, 139, 250, 0.2);
+        color: #c4b5fd;
+        border: 1px solid rgba(167, 139, 250, 0.35);
+      }
+      .answer-highlight {
+        margin-top: 0;
+        padding: 16px 16px;
+        border-radius: 12px;
+        background: linear-gradient(135deg, rgba(52, 211, 153, 0.12), rgba(56, 189, 248, 0.1));
+        border: 1px solid rgba(52, 211, 153, 0.35);
+        font-size: 0.92rem;
+        color: var(--text);
+        line-height: 1.65;
+      }
+      .verdict-go {
+        margin-top: 12px;
+        padding: 14px 16px;
+        border-radius: 12px;
+        background: rgba(52, 211, 153, 0.15);
+        border: 2px solid var(--ok);
+        font-weight: 700;
+        font-size: 1.05rem;
+        color: #6ee7b7;
+        text-align: center;
+      }
+      .verdict-go small {
+        display: block;
+        margin-top: 8px;
+        font-weight: 400;
+        font-size: 0.88rem;
+        color: var(--text);
+        line-height: 1.55;
+      }
+      footer {
+        text-align: center;
+        margin-top: 28px;
+        font-size: 0.75rem;
+        color: var(--muted);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <h1>競合動画分析（図解）</h1>
+
+      <section class="block">
+        <h2><span>1</span> 分析する動画の情報</h2>
+        <p class="meta-title">81歳女性の体験談「幸せな老後に必要なのはこの8つ」</p>
+        <p class="meta-link">
+          <a href="https://www.youtube.com/watch?v=NFK229slkxs" target="_blank" rel="noopener noreferrer">https://www.youtube.com/watch?v=NFK229slkxs</a>
+        </p>
+      </section>
+
+      <section class="block">
+        <h2><span>2</span> サムネイルの工夫</h2>
+        <ul class="bullet-list">
+          <li>「81歳女性」「60代以上」とターゲットを明記し、当事者意識を直撃させている。</li>
+          <li>「8つ」「5年」と具体的な数字を使い、情報の重要性を強調。</li>
+          <li>穏やかな女性の表情と落ち着いた配色で、シニア層の信頼感を得るデザイン。</li>
+        </ul>
+      </section>
+
+      <section class="block">
+        <h2><span>3</span> 導入10秒のフック</h2>
+        <p class="answer-only">
+          「柔らかい朝日」などの情景描写から入り、視聴者を物語に引き込む。かつての「老後への恐怖」が「穏やかさ」に変わったというギャップを提示し、その理由を知りたくさせている。
+        </p>
+      </section>
+
+      <section class="block">
+        <h2><span>4</span> ハッシュタグ</h2>
+        <div class="tags">
+          <span class="tag">#老後の幸せ</span>
+          <span class="tag">#シニア</span>
+          <span class="tag">#体験談</span>
+          <span class="tag">#人生100年時代</span>
+        </div>
+      </section>
+
+      <section class="block">
+        <h2><span>5</span> 独自の考察</h2>
+        <div class="answer-highlight">
+          「頑張りすぎることの弊害」を説き、現代のシニアが抱える「何かしていないと不安」という痛みに深く共感させている点が強力。ストーリー形式と解決策（8つの習慣）の組み合わせが秀逸。
+        </div>
+      </section>
+
+      <section class="block">
+        <h2><span>6</span> 判定</h2>
+        <div class="verdict-go">
+          GO
+          <small>ストーリー形式×具体的な解決策の構成は、AI動画との相性が抜群</small>
+        </div>
+      </section>
+
+      <footer>output/video-analysis-NFK229slkxs.html</footer>
+    </div>
+  </body>
+</html>
