@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>競合YouTubeリサーチ｜説明図（図解ツール）</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ['"Noto Sans JP"', "system-ui", "sans-serif"],
+            },
+          },
+        },
+      };
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10.9.0/dist/mermaid.min.js"></script>
+  </head>
+  <body class="min-h-screen bg-slate-950 font-sans text-slate-200 antialiased">
+    <!-- 役割の明示 -->
+    <div class="border-b border-amber-500/40 bg-amber-950/50 px-4 py-3 text-center text-sm text-amber-100">
+      <strong class="text-amber-200">説明用の図解ページです。</strong>
+      このHTML単体ではYouTubeやスプレッドシートに接続しません。企画・共有・プレゼン向けの「流れの見える化」が目的です。
+      <span class="mt-2 block text-amber-200/95">また、<strong>新しいYouTubeチャンネルは一切つくっていません。</strong>下に出てくるリンクは、もともとネット上にある他人のチャンネル／動画へのショートカットです。</span>
+    </div>
+
+    <header class="border-b border-white/10 bg-slate-900/80 px-4 py-10 backdrop-blur sm:px-6 lg:px-8">
+      <div class="mx-auto max-w-4xl text-center">
+        <p class="text-xs font-semibold uppercase tracking-[0.2em] text-cyan-400">Diagram · 図解ツール</p>
+        <h1 class="mt-2 text-2xl font-bold text-white sm:text-3xl">競合チャンネル監視 → 分析 → ネタ化</h1>
+        <p class="mx-auto mt-3 max-w-2xl text-sm text-slate-400">
+          想定している仕組みを<strong class="font-medium text-slate-300">フローチャート</strong>と<strong class="font-medium text-slate-300">ステップ図</strong>で示します。実装フェーズでは別途API・スプレッドシート・自動実行が必要です。
+        </p>
+      </div>
+    </header>
+
+    <main class="mx-auto max-w-5xl space-y-16 px-4 py-12 sm:px-6 lg:px-8">
+      <!-- 全体フロー：Mermaid -->
+      <section aria-labelledby="sec-main">
+        <div class="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+          <h2 id="sec-main" class="text-lg font-semibold text-white">全体の流れ（フローチャート）</h2>
+          <span class="text-xs text-slate-500">下図は概念図です</span>
+        </div>
+        <div class="mt-4 overflow-x-auto rounded-2xl border border-white/10 bg-slate-900 p-4 shadow-xl sm:p-6">
+          <div class="mermaid text-center">
+flowchart LR
+  A["トリガー①<br/>競合が動画投稿"] --> B["取得<br/>タイトル・再生数・投稿日"]
+  B --> C[("スプレッドシート<br/>履歴として蓄積")]
+  C --> D["トリガー②<br/>毎週水曜・定時"]
+  D --> E["トレンド分析<br/>伸び率・人気・キーワード"]
+  E --> F["アウトプット<br/>トレンド・ネタ候補"]
+  F --> G["シート上で<br/>可視化"]
+  style A fill:#164e63,color:#ecfeff
+  style D fill:#831843,color:#fce7f3
+  style C fill:#1e3a5f,color:#e0f2fe
+  style F fill:#365314,color:#ecfccb
+  style G fill:#1e3a8a,color:#dbeafe
+          </div>
+        </div>
+      </section>
+
+      <!-- 同じ内容を Tailwind の矢印付きステップで（図解の補助） -->
+      <section aria-labelledby="sec-steps">
+        <h2 id="sec-steps" class="text-lg font-semibold text-white">同じ流れをステップで見る</h2>
+        <p class="mt-1 text-sm text-slate-500">印刷・スクリーンショットしやすい横並びイメージです。</p>
+        <ol class="mt-6 flex flex-col gap-0 sm:flex-row sm:flex-wrap sm:items-stretch sm:justify-center">
+          <li class="flex flex-1 min-w-[140px] flex-col items-center rounded-xl border border-cyan-500/30 bg-cyan-950/40 p-4 text-center sm:max-w-[11rem]">
+            <span class="text-xs font-bold text-cyan-300">①</span>
+            <span class="mt-1 text-sm font-semibold text-white">トリガー</span>
+            <span class="mt-1 text-xs text-slate-400">競合の新着投稿を検知する想定</span>
+          </li>
+          <li class="hidden items-center px-1 text-slate-600 sm:flex" aria-hidden="true">→</li>
+          <li class="flex flex-1 min-w-[140px] flex-col items-center rounded-xl border border-white/10 bg-slate-900 p-4 text-center sm:max-w-[11rem]">
+            <span class="text-xs font-bold text-slate-400">取得</span>
+            <span class="mt-1 text-sm font-semibold text-white">タイトル・再生数・投稿日</span>
+          </li>
+          <li class="hidden items-center px-1 text-slate-600 sm:flex" aria-hidden="true">→</li>
+          <li class="flex flex-1 min-w-[140px] flex-col items-center rounded-xl border border-sky-500/30 bg-sky-950/30 p-4 text-center sm:max-w-[11rem]">
+            <span class="text-xs font-bold text-sky-300">蓄積</span>
+            <span class="mt-1 text-sm font-semibold text-white">スプレッドシート</span>
+            <span class="mt-1 text-xs text-slate-400">DB代わりに時系列で保存</span>
+          </li>
+          <li class="hidden items-center px-1 text-slate-600 sm:flex" aria-hidden="true">→</li>
+          <li class="flex flex-1 min-w-[140px] flex-col items-center rounded-xl border border-fuchsia-500/30 bg-fuchsia-950/40 p-4 text-center sm:max-w-[11rem]">
+            <span class="text-xs font-bold text-fuchsia-300">②</span>
+            <span class="mt-1 text-sm font-semibold text-white">毎週水曜</span>
+            <span class="mt-1 text-xs text-slate-400">定時バッチのイメージ</span>
+          </li>
+          <li class="hidden items-center px-1 text-slate-600 sm:flex" aria-hidden="true">→</li>
+          <li class="flex flex-1 min-w-[140px] flex-col items-center rounded-xl border border-white/10 bg-slate-900 p-4 text-center sm:max-w-[11rem]">
+            <span class="text-xs font-bold text-violet-300">分析</span>
+            <span class="mt-1 text-sm font-semibold text-white">伸び率・人気・キーワード</span>
+          </li>
+          <li class="hidden items-center px-1 text-slate-600 sm:flex" aria-hidden="true">→</li>
+          <li class="flex flex-1 min-w-[140px] flex-col items-center rounded-xl border border-lime-500/30 bg-lime-950/30 p-4 text-center sm:max-w-[11rem]">
+            <span class="text-xs font-bold text-lime-300">出力</span>
+            <span class="mt-1 text-sm font-semibold text-white">トレンド・ネタ候補</span>
+            <span class="mt-1 text-xs text-slate-400">シートで可視化</span>
+          </li>
+        </ol>
+      </section>
+
+      <!-- トリガー①の中身：競合3つ -->
+      <section aria-labelledby="sec-comp">
+        <h2 id="sec-comp" class="text-lg font-semibold text-white">トリガー①の監視対象（例）</h2>
+        <p class="mt-1 text-sm text-slate-400">図の「入口」に相当するチャンネル・動画の例です。</p>
+        <div class="mt-4 rounded-xl border border-sky-500/40 bg-sky-950/40 p-4 text-sm text-sky-100">
+          <p class="font-semibold text-white">リンクを開くと何が起きるか</p>
+          <ul class="mt-2 list-disc space-y-1 pl-5 text-sky-200/90">
+            <li>いつもの <strong class="text-white">YouTube のサイト</strong>（またはアプリ）に飛びます。こちらで作った特別な画面ではありません。</li>
+            <li>表示されるのは、<strong class="text-white">すでに存在する別の人のチャンネル・動画</strong>です。あなた用にチャンネルを開設したわけではありません。</li>
+            <li>「この図解ページの続き」や「自動でデータが溜まる画面」はありません。あくまで<strong class="text-white">リサーチしたい相手先の例</strong>として載せています。</li>
+          </ul>
+        </div>
+        <div class="mt-4 overflow-x-auto rounded-2xl border border-white/10 bg-slate-900 p-4 sm:p-6">
+          <div class="mermaid">
+flowchart TB
+  subgraph comp["監視対象チャンネル（例）"]
+    CH1["人生100年物語"]
+    CH2["シニアの心が軽くなる知恵<br/>（代表動画URLからチャンネル特定の想定）"]
+    CH3["シニアライフ60代"]
+  end
+  comp --> FETCH["API等で<br/>新着・統計を取得"]
+  style FETCH fill:#164e63,color:#ecfeff
+          </div>
+        </div>
+        <ul class="mt-4 grid gap-3 sm:grid-cols-3">
+          <li class="rounded-xl border border-white/10 bg-slate-900/80 p-4 text-sm">
+            <span class="text-xs font-bold text-red-400">CH1</span>
+            <p class="mt-1 font-medium text-white">人生100年物語</p>
+            <a class="mt-2 inline-block text-cyan-400 hover:underline" href="https://www.youtube.com/@%E4%BA%BA%E7%94%9F100%E5%B9%B4%E7%89%A9%E8%AA%9E" target="_blank" rel="noopener noreferrer">YouTube →</a>
+          </li>
+          <li class="rounded-xl border border-white/10 bg-slate-900/80 p-4 text-sm">
+            <span class="text-xs font-bold text-red-400">CH2</span>
+            <p class="mt-1 font-medium text-white">シニアの心が軽くなる知恵</p>
+            <a class="mt-2 inline-block text-cyan-400 hover:underline" href="https://www.youtube.com/watch?v=fz_K2ZGe0BM&t=1409s" target="_blank" rel="noopener noreferrer">代表動画 →</a>
+          </li>
+          <li class="rounded-xl border border-white/10 bg-slate-900/80 p-4 text-sm">
+            <span class="text-xs font-bold text-red-400">CH3</span>
+            <p class="mt-1 font-medium text-white">シニアライフ60代</p>
+            <a class="mt-2 inline-block text-cyan-400 hover:underline" href="https://www.youtube.com/@%E3%82%B7%E3%83%8B%E3%82%A2%E3%83%A9%E3%82%A4%E3%83%9560%E4%BB%A3" target="_blank" rel="noopener noreferrer">YouTube →</a>
+          </li>
+        </ul>
+      </section>
+
+      <!-- シート内のイメージ -->
+      <section aria-labelledby="sec-sheet">
+        <h2 id="sec-sheet" class="text-lg font-semibold text-white">スプレッドシート内のイメージ（分析の置き場）</h2>
+        <div class="mt-4 overflow-x-auto rounded-2xl border border-white/10 bg-slate-900 p-4 sm:p-6">
+          <div class="mermaid">
+flowchart TB
+  LOG["シート: 動画ログ<br/>（タイトル・再生数・日付の履歴）"]
+  LOG --> T["シート: 週次トレンド<br/>（伸び率・人気の抽出）"]
+  LOG --> K["シート: キーワード<br/>（タイトルから頻出語）"]
+  T --> V["グラフ・ピボットで可視化"]
+  K --> V
+  style LOG fill:#1e3a5f,color:#e0f2fe
+  style V fill:#365314,color:#ecfccb
+          </div>
+        </div>
+      </section>
+
+      <!-- 実ツールとの違い -->
+      <section class="rounded-2xl border border-white/10 bg-slate-900/60 p-6" aria-labelledby="sec-note">
+        <h2 id="sec-note" class="text-base font-semibold text-white">このページと「本番ツール」の違い</h2>
+        <dl class="mt-4 space-y-3 text-sm text-slate-300">
+          <div class="flex flex-col gap-1 border-b border-white/5 pb-3 sm:flex-row sm:gap-4">
+            <dt class="shrink-0 font-medium text-cyan-300 sm:w-40">このHTML（図解）</dt>
+            <dd>流れ・役割の説明のみ。データ取得や保存はしません。</dd>
+          </div>
+          <div class="flex flex-col gap-1 sm:flex-row sm:gap-4">
+            <dt class="shrink-0 font-medium text-lime-300 sm:w-40">実運用ツール（別途）</dt>
+            <dd>YouTube Data API、スプレッドシートAPIまたは手動エクスポート、定時実行（Apps Script・クラウド等）を組み合わせて構築します。リポジトリ内の <code class="rounded bg-black/40 px-1.5 py-0.5 text-xs text-slate-200">tools/apps-script/youtube-trend-pipeline.gs</code> は実装のひな形として参照できます。</dd>
+          </div>
+        </dl>
+      </section>
+    </main>
+
+    <footer class="border-t border-white/10 py-8 text-center text-xs text-slate-600">
+      youtube-trend-hub.html · 説明用図解 · Tailwind + Mermaid
+    </footer>
+
+    <script>
+      mermaid.initialize({
+        startOnLoad: true,
+        theme: "dark",
+        themeVariables: {
+          primaryColor: "#164e63",
+          primaryTextColor: "#ecfeff",
+          lineColor: "#64748b",
+          secondaryColor: "#1e293b",
+          tertiaryColor: "#0f172a",
+        },
+        flowchart: { useMaxWidth: true, htmlLabels: true, curve: "basis" },
+        securityLevel: "loose",
+      });
+    </script>
+  </body>
+</html>

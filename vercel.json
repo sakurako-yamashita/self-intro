@@ -1,5 +1,6 @@
 {
   "rewrites": [
-    { "source": "/competitor-analyzer", "destination": "/competitor-analyzer.html" }
+    { "source": "/competitor-analyzer", "destination": "/competitor-analyzer.html" },
+    { "source": "/youtube-trend-hub", "destination": "/youtube-trend-hub.html" }
   ]
 }
