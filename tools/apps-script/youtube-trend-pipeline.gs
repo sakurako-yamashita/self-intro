@@ -13,7 +13,7 @@ var SHEET_VIDEOS = 'Videos_Log';
 var SHEET_TRENDS = 'Weekly_Trends';
 var SHEET_KEYWORDS = 'Keyword_Summary';
 
-/** 監視対象: handle は @なし。videoId を渡すとその動画のチャンネルを監視 */
+/** 観測対象: handle は @なし。videoId を渡すとその動画のチャンネルを観測 */
 var COMPETITORS = [
   { label: '人生100年物語', handle: '人生100年物語' },
   { label: 'シニアの心が軽くなる知恵', videoId: 'fz_K2ZGe0BM' },
